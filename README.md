@@ -1,2 +1,3 @@
 # Sofia-University
-Sofia University programming studies
+
+In this repository I will save all the exercises I've done in Sofia-University's programming course.
