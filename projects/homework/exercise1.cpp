@@ -2,68 +2,57 @@
 using namespace std;
 int main()
 {
-    int n;
-    cout << "n = ";
+    int n, counter = 0, array[100000], index = 0, minimumSum = INT_MAX, m, q, p, currentSum = 0;
+
+    cout << "Insert n: ";
     cin >> n;
 
-    if (n < 1 || n > 1000000000)
+    while(!cin || n < 1 || n > 1000000000)
     {
-        do 
-        {
-            cout << "Invalid input! Please try again!" << endl;
-            cout << "n = ";
-            cin >> n;
-        } while (n < 1 || n > 1000000000);
+        cout << "Wrong input! Please try again!" << endl;
+        cin.clear();
+        cin.ignore();
+        cout << "Insert n: ";
+        cin >> n;
     }
 
-    int counter = 0;
-    
     for (int i = 1; i <= n; i++)
     {
         if (n % i == 0)
         {
             counter++;
-        }
-    }
-
-    const int length = counter;
-    int arr[length], index = 0;
-
-    for (int i = 1; i <= n; i++)
-    {
-        if (n % i == 0)
-        {
-            arr[index] = i;
+            array[index] = i;
             index++;
         }
     }
-    
-    if (length <= 2) // if the number is prime or the number is one then the numbers will be 1, 1 and n (and 1 if n == 1)
-    {
-        cout << "m = " << arr[0] << endl;
-        cout << "p = " << 1 << endl;
-        cout << "q = " << 1 << endl;
-    }
-    else
-    {
-        int minimumSum = INT_MAX, m, q, p, currentSum = 0;
 
-        for (int i = 0; i < length; i++)
-        {   
-            for (int j = i + 1; j < length; j++)
+    // if the number is prime or the number is one then the numbers will be 1, -1 and -n (and 1 if n == 1)
+    // In this way the sum will be minimum 1 + (-1) + (-n)
+
+    if (counter <= 2) 
+    {
+        cout << "m = " << 1 << endl;
+        cout << "p = " << -1 << endl;
+        cout << "q = " << -n << endl;
+    }
+    else 
+    {
+        for (int i = 0; i < counter; i++)
+        {
+            for (int j = i + 1; j < counter; j++)
             {
-                for (int k = j + 1; k < length; k++)
+                for (int k = j + 1; k < counter; k++)
                 {
-                    if (arr[i] * arr[j] * arr[k] == n)
+                    if (array[i] * (-array[j]) * (-array[k]) == n)
                     {
-                        currentSum = arr[i] + arr[j] + arr[k];
+                        currentSum = array[i] - array[j] - array[k];
 
                         if (currentSum < minimumSum)
                         {
                             minimumSum = currentSum;
-                            m = arr[i];
-                            q = arr[j];
-                            p = arr[k];
+                            m = array[i];
+                            q = -array[j];
+                            p = -array[k];
                         }
                     }
                 }
@@ -71,9 +60,11 @@ int main()
         }
 
         cout << "m = " << m << endl;
-        cout << "q = " << q << endl;
         cout << "p = " << p << endl;
+        cout << "q = " << q << endl;
     }
-    
+
     return 0;
 }
+
+        
