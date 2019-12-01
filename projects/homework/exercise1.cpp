@@ -26,14 +26,14 @@ int main()
         }
     }
 
-    // if the number is prime or the number is one then the numbers will be 1, -1 and -n (and 1 if n == 1)
-    // In this way the sum will be minimum 1 + (-1) + (-n)
+    // if the number is prime or the number is one then the numbers will be 1, 1 and n (and 1 if n == 1)
+    // In this way the sum will be minimum 1 + 1 + n
 
     if (counter <= 2) 
     {
         cout << "m = " << 1 << endl;
-        cout << "p = " << -1 << endl;
-        cout << "q = " << -n << endl;
+        cout << "p = " << 1 << endl;
+        cout << "q = " << n << endl;
     }
     else 
     {
@@ -43,16 +43,16 @@ int main()
             {
                 for (int k = j + 1; k < counter; k++)
                 {
-                    if (array[i] * (-array[j]) * (-array[k]) == n)
+                    if (array[i] * array[j] * array[k] == n)
                     {
-                        currentSum = array[i] - array[j] - array[k];
+                        currentSum = array[i] + array[j] + array[k];
 
                         if (currentSum < minimumSum)
                         {
                             minimumSum = currentSum;
                             m = array[i];
-                            q = -array[j];
-                            p = -array[k];
+                            q = array[j];
+                            p = array[k];
                         }
                     }
                 }
