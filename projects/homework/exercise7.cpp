@@ -3,18 +3,16 @@ using namespace std;
 int main()
 {
     int n, numbers[100000], x, counter = 0;
-    cout << "n = ";
-    cin >> n;
 
-    if (n < 0)
+    do
     {
-        do 
-        {   
+        cout << "n = ";
+        cin >> n;
+        if (n < 0)
+        {
             cout << "Invalid input! Please try again!" << endl;
-            cout << "n = ";
-            cin >> n;
-        } while(n < 0);
-    }
+        }
+    } while (n < 0);
 
     for (int i = 0; i < n; i++)
     {
@@ -32,11 +30,10 @@ int main()
             {
                 counter++;
             }
-
         }
     }
 
-    cout << counter / 2 << endl; // I devide the counter by 2, because for example (1, 3) and (3, 1) is the same
-    
+    cout << counter / 2 << endl;
+
     return 0;
 }

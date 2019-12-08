@@ -8,7 +8,15 @@ int main()
     cin >> m;
     for (int i = m; i >= 0; i--)
     {
-        cin >> Pm[i];
+        do
+        {
+            cin >> Pm[i];
+            if (Pm[i] < -1000 || Pm[i] > 1000)
+            {
+                cout << "Invalid input! Please try again!" << endl;
+                cin >> Pm[i];
+            }
+        } while (Pm[i] < -1000 || Pm[i] > 1000);
     }
 
     cout << "n = ";
@@ -16,15 +24,22 @@ int main()
 
     for (int i = n; i >= 0; i--)
     {
-        cin >> Qn[i];
+         do
+        {
+            cin >> Qn[i];
+            if (Qn[i] < -1000 || Qn[i] > 1000)
+            {
+                cout << "Invalid input! Please try again!" << endl;
+                cin >> Qn[i];
+            }
+        } while (Qn[i] < -1000 || Qn[i] > 1000);
     }
 
     for (int i = m; i >= 0; i--)
     {
         for (int j = n; j >= 0; j--)
         {
-            int total = Pm[i] * Qn[j];
-            result[i + j] += total;
+            result[i + j] += Pm[i] * Qn[j];
         }
     }
 

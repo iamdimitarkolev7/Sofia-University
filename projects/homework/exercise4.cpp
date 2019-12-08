@@ -4,23 +4,23 @@ using namespace std;
 int main()
 {
     int n, numbers[1000], currentVolume, maxVolume = INT_MIN, multiplier;
-    cout << "n = ";
-    cin >> n;
 
-    while(!cin || n < 0 || n > 1000)
+    do
     {
-        cout << "Wrong input! Please try again!" << endl;
-        cin.clear();
-        cin.ignore();
         cout << "n = ";
         cin >> n;
-    }
+        if (n < 0 || n > 1000)
+        {
+            cout << "Invalid input! Please try again!" << endl;
+        }
+
+    } while (n < 0 || n > 1000);
 
     for (int i = 0; i < n; i++)
     {
         cin >> numbers[i];
     }
-    
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
@@ -29,7 +29,7 @@ int main()
             {
                 multiplier = numbers[i];
             }
-            else 
+            else
             {
                 multiplier = numbers[j];
             }

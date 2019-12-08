@@ -3,18 +3,28 @@ using namespace std;
 int main()
 {
     int n, counter = 0, array[100000], index = 0, minimumSum = INT_MAX, m, q, p, currentSum = 0;
-
-    cout << "Insert n: ";
+    /*
+    cout << "n = ";
     cin >> n;
 
-    while(!cin || n < 1 || n > 1000000000)
+    while(!cin || n < 0 || n > 1000000000)
     {
         cout << "Wrong input! Please try again!" << endl;
         cin.clear();
         cin.ignore();
+        cout << "n = ";
+        cin >> n;
+    }*/
+
+    do
+    {
         cout << "Insert n: ";
         cin >> n;
-    }
+        if (n < 1 || n > 1000000000)
+        {
+            cout << "Wrong input! Please try again!" << endl;
+        }
+    } while(n < 1 || n > 1000000000);
 
     for (int i = 1; i <= n; i++)
     {
@@ -26,16 +36,13 @@ int main()
         }
     }
 
-    // if the number is prime or the number is one then the numbers will be 1, 1 and n (and 1 if n == 1)
-    // In this way the sum will be minimum 1 + 1 + n
-
-    if (counter <= 2) 
+    if (counter <= 2)
     {
         cout << "m = " << 1 << endl;
         cout << "p = " << 1 << endl;
         cout << "q = " << n << endl;
     }
-    else 
+    else
     {
         for (int i = 0; i < counter; i++)
         {
@@ -66,5 +73,3 @@ int main()
 
     return 0;
 }
-
-        

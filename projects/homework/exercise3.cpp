@@ -33,8 +33,6 @@ int main()
     {
         cin >> numbers[i];
     }
-
-    bool isNull = false;
  
     for (int i = a; i <= b; i++)
     {
