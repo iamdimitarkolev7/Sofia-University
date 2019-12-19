@@ -46,7 +46,8 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        cin >> words[i];
+        cin.ignore();
+        cin.getline(words[i], 50);
     }
 
     printReversed(words, n);
