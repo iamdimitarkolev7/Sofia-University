@@ -4,7 +4,7 @@ using namespace std;
 
 void printSubstrings(char str[], int k, int startingIndex)
 {
-    int p = 0, length = 0, i = 0, q = 0;
+    int p = 0, length = 0;
     char formedWord[1000];
 
     for (int i = startingIndex; i < strlen(str); i++)
