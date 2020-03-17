@@ -26,10 +26,10 @@ public:
             && (this->point1.y <= p.y && this->point2.y >= p.y);
     }
 
-    Point cross(Line otherLine)
+    /*Point cross(Line otherLine)
     {
          
-    }
+    }*/
 };
 
 int main()
