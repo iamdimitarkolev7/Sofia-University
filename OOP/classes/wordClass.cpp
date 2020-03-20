@@ -7,7 +7,7 @@ class Word
 public:
     char word[20];
 
-    void init ()
+    void output ()
     {
         size_t length = strlen(this->word);
 
@@ -65,7 +65,7 @@ int main()
 
     word1 = word1 + 'a';
     word1 += 'r';
-    word1.init();
+    word1.output();
 
     std::cin.getline(word2.word, 20);
 
