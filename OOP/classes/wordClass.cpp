@@ -7,6 +7,16 @@ class Word
 public:
     char word[20];
 
+    Word()
+    {
+        strcpy(this->word, "");
+    }
+
+    Word(const char *_word)
+    {
+        strcpy(this->word, _word);
+    }
+
     void output ()
     {
         size_t length = strlen(this->word);
@@ -42,14 +52,29 @@ public:
         return *this;
     }
 
+    Word operator + (Word other)
+    {
+        size_t length1 = strlen(this->word);
+        size_t length2 = strlen(other.word);
+        assert(length1 + length2 <= 20);
+
+        for (int i = 0; i < length2; i++)
+        {
+            this->word[length1 + i] = other.word[i];
+            this->word[length1 + i + 1] = 0;
+        }
+
+        return *this;
+    }
+
     bool operator < (Word other)
     {
-        return strcmp(this->word, other.word) < 0;
+        return strcmp(this->word, other.word) > 0;
     }
 
     bool operator > (Word other)
     {
-        return strcmp(this->word, other.word) > 0;
+        return strcmp(this->word, other.word) < 0;
     }
 
     bool operator == (Word other)
@@ -60,21 +85,26 @@ public:
 
 int main()
 {
-    Word word1, word2;
-    std::cin.getline(word1.word, 20);
+    Word word1;
 
-    word1 = word1 + 'a';
+    word1 = word1 + "Dimita";
     word1 += 'r';
     word1.output();
 
-    std::cin.getline(word2.word, 20);
+    Word word2("Mitko");
+    Word word3("Dimitar");
 
     if (word1 < word2)
     {
-        std::cout << "Word1 is smaller than word2" << std::endl;
+        std::cout << word1.word <<" is smaller than " << word2.word << std::endl;
     }
 
-    if (word1 == word2)
+    if (word1 > word2)
+    {
+        std::cout << word1.word <<" is greater than " << word2.word << std::endl;
+    }
+
+    if (word1 == word3)
     {
         std::cout << "Words are equal" << std::endl;
     }
