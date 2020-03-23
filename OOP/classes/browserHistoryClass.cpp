@@ -10,38 +10,38 @@ struct HistoryEntry
 
 class BrowserHistory
 {
-  public:
+public:
     HistoryEntry *data;
     size_t max;
     size_t length;
 
-    BrowserHistory() : data(nullptr), length(0) {}
+    BrowserHistory() : data(nullptr), length(0), max(0) {}
 
-    BrowserHistory(size_t n) : max(n), length(0) {}
+    BrowserHistory(size_t n) : data(nullptr), max(n), length(0) {}
 
-    void add(HistoryEntry siteData)
+    BrowserHistory(const BrowserHistory &other)
     {
-        assert(this->length + 1 <= max);
-        HistoryEntry *newData = new HistoryEntry[this->length + 1];
+        this->data = new HistoryEntry[other.length];
 
-        for (size_t i = 0; i < this->length; i++)
+        for (size_t i = 0; i < other.length; i++)
         {
-            newData[i].month = this->data[i].month;
-            strcpy(newData[i].url, this->data[i].url);
+            this->data[i].month = other.data[i].month;
+            strcpy(this->data[i].url, other.data[i].url);
         }
 
-        newData[this->length].month = siteData.month;
-        strcpy(newData[this->length].url, siteData.url);
+        this->max = other.max;
+        this->length = other.length;
+    }
 
+    ~BrowserHistory()
+    {
+        std::cout << "Destructor invoked" << std::endl;
         delete[] this->data;
-
-        this->length++;
-        data = newData;
     }
 
     BrowserHistory operator+=(HistoryEntry siteData)
     {
-        assert(this->length + 1 <= max);
+        assert(this->length + 1 <= this->max);
 
         HistoryEntry *newData = new HistoryEntry[this->length + 1];
 
@@ -62,9 +62,9 @@ class BrowserHistory
         return *this;
     }
 
-    BrowserHistory operator + (const BrowserHistory &other)
+    BrowserHistory operator+(const BrowserHistory &other)
     {
-        BrowserHistory res;
+        BrowserHistory res(this->max + other.max);
 
         for (size_t i = 0; i < this->length; i++)
         {
@@ -75,8 +75,28 @@ class BrowserHistory
         {
             res.add(other.data[i]);
         }
-    
+
         return res;
+    }
+
+    void add(HistoryEntry siteData)
+    {
+        assert(this->length + 1 <= this->max);
+        HistoryEntry *newData = new HistoryEntry[this->length + 1];
+
+        for (size_t i = 0; i < this->length; i++)
+        {
+            newData[i].month = this->data[i].month;
+            strcpy(newData[i].url, this->data[i].url);
+        }
+
+        newData[this->length].month = siteData.month;
+        strcpy(newData[this->length].url, siteData.url);
+
+        delete[] this->data;
+
+        this->length++;
+        data = newData;
     }
 
     BrowserHistory deleteLatest()
@@ -155,7 +175,7 @@ class BrowserHistory
 
 int main()
 {
-    BrowserHistory history1(20);
+    BrowserHistory history1(10);
     HistoryEntry entry1 = {7, "www.kolev7.com"};
     HistoryEntry entry2 = {12, "www.facebook.com"};
     HistoryEntry entry3 = {7, "www.7777.bg"};
@@ -174,7 +194,7 @@ int main()
     std::cout << std::endl;
     history1.printMonth();
 
-    BrowserHistory history2(20);
+    BrowserHistory history2(12);
 
     history1.deleteLatest();
     history2 = history1;
@@ -183,10 +203,16 @@ int main()
 
     std::cout << std::endl;
 
-    BrowserHistory history3(20);
+    BrowserHistory history3(15);
     history3 = history2 + history1;
 
     history3.output();
+
+    std::cout << std::endl
+              << "Copy constructor test: " << std::endl;
+
+    BrowserHistory history4(history1);
+    history4.output();
 
     return 0;
 }
