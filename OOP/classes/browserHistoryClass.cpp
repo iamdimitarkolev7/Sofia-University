@@ -35,8 +35,36 @@ public:
 
     ~BrowserHistory()
     {
-        std::cout << "Destructor invoked" << std::endl;
+        //std::cout << "Destructor invoked" << std::endl;
         delete[] this->data;
+    }
+
+    BrowserHistory operator=(const BrowserHistory &other)
+    {
+        if (this != &other)
+        {
+            delete[] this->data;
+            this->data = new (std::nothrow) HistoryEntry[other.length];
+
+            if (!this->data)
+            {
+                std::cout << "Not enough memory!" << std::endl;
+                this->data = nullptr;
+                this->length = 0;
+                return 0;
+            }
+
+            for (int i = 0; i < other.length; i++)
+            {
+                this->data[i].month = other.data[i].month;
+                strcpy(this->data[i].url, other.data[i].url);
+            }
+
+            this->length = other.length;
+            this->max = other.max;
+        }
+
+        return *this;
     }
 
     BrowserHistory operator+=(HistoryEntry siteData)
@@ -77,6 +105,11 @@ public:
         }
 
         return res;
+    }
+
+    size_t getLength()
+    {
+        return this->length;
     }
 
     void add(HistoryEntry siteData)
@@ -213,6 +246,12 @@ int main()
 
     BrowserHistory history4(history1);
     history4.output();
+
+    std::cout << std::endl
+              << "Operator= test: " << std::endl;
+    BrowserHistory history5;
+    history5 = history4;
+    history5.output();
 
     return 0;
 }
