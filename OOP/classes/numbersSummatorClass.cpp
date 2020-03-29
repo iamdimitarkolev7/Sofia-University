@@ -3,10 +3,10 @@
 template <class T>
 class NumbersSummator
 {
-  public:
+private:
     T number;
     size_t counter;
-
+public:
     NumbersSummator()
     {
         this->number = 0;

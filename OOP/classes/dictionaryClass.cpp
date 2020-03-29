@@ -10,10 +10,10 @@ struct Word
 
 class Dictionary
 {
-public:
+private:
     Word *data;
     size_t length;
-
+public:
     Dictionary() : data(nullptr), length(0) {}
 
     void input()

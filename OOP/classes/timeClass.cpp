@@ -3,10 +3,11 @@
 
 class Time
 {
-public:
+private:
     int hours;
     int minutes;
-
+    
+public:
     void init()
     {
         std::cout << "The time is " << this->hours << ":" << this->minutes << std::endl;

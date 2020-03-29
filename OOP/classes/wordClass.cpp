@@ -4,9 +4,10 @@
 
 class Word
 {
-public:
+private:
     char word[20];
 
+public:
     Word()
     {
         strcpy(this->word, "");

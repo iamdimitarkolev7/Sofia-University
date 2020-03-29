@@ -10,11 +10,11 @@ struct HistoryEntry
 
 class BrowserHistory
 {
-public:
+private:
     HistoryEntry *data;
     size_t max;
     size_t length;
-
+public:
     BrowserHistory() : data(nullptr), length(0), max(0) {}
 
     BrowserHistory(size_t n) : data(nullptr), max(n), length(0) {}

@@ -8,10 +8,11 @@ struct Point
 
 class Line
 {
-public:
+private:
     Point point1;
     Point point2;
 
+public:
     bool isParallel(Line otherLine)
     {
         bool checkX = (this->point1.x - otherLine.point1.x == this->point2.x - otherLine.point2.x);
