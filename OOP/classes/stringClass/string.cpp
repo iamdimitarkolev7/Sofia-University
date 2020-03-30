@@ -29,6 +29,17 @@ String::~String()
     delete[] str;
 }
 
+void String::setStr(const char *_str)
+{
+    this->str = new char[strlen(_str)];
+    strcpy(this->str, _str);
+}
+
+void String::setLength(int _length)
+{
+    this->length = _length;
+}
+
 String &String::operator=(const String &other)
 {
     if (this != &other)
@@ -139,6 +150,7 @@ String String::operator+(const char *other)
 
 char String::operator[](const int index)
 {
+    assert(index >= 0 && index <= this->length);
     return this->str[index];
 }
 
@@ -180,17 +192,6 @@ int String::getLength() const
 const char *String::getStr() const
 {
     return this->str;
-}
-
-void String::setStr(const char *_str)
-{
-    this->str = new char[strlen(_str)];
-    strcpy(this->str, _str);
-}
-
-void String::setLength(int _length)
-{
-    this->length = _length;
 }
 
 void String::output()
