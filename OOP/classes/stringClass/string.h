@@ -5,7 +5,7 @@
 */
 
 #ifndef __STRING_H
-#define __STRING_H   
+#define __STRING_H
 
 #include <iostream>
 #include <cstring>
@@ -13,31 +13,44 @@
 
 class String
 {
-    private:
+private:
     char *str;
     int length;
 
-    public:
+    bool isMatching(char *strToSearch, const char *strToMatch);
+    void shiftLeft(char *strToShift, int shiftPosCount);
+    void shiftRight(char *strToShift, int shiftPosCount);
+    void performStringReplacement(char *source, const char *newWord);
+
+public:
     String();
-    String(const char* _str, int _length);
-    String(const String& other);
+    String(const char *_str);
+    String(const String &other);
     ~String();
-    String& operator=(const String& other);
+    String &operator=(const String &other);
 
-    const char* getStr() const;
+    const char *getStr() const;
     int getLength() const;
-    void setStr(const char* _str);
-    void setLength(int _length);
+    void setStr(const char *_str);//
+    void setLength(int _length);//
 
-    String operator+=(const String& other); //
-    String operator+=(const char* _str); //
-    String operator+=(const char x); //
-    String operator+(const char* _str); //
+    String operator+=(const String &other);
+    String operator+=(const char *_str);
+    String operator+(const String &other);
+    String operator+(const char *_str);
+    char operator[](const int index);
+    bool operator!=(const String &other);
+    bool operator==(const String &other);
+    bool operator<(const String &other);
+    bool operator>(const String &other);
+    bool operator<=(const String &other);
+    bool operator>=(const String &other);
 
-    void output();
-    void add(const char* _str);
+    void output(); 
+    void add(const char *_str);
     void removeLast();
-    void slice(int start, int end); //
+    String slice(int start, int end) const;     //???
+    void replace(const char *oldWord,const char *newWord);
 };
 
 #endif

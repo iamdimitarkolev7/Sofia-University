@@ -1,28 +1,51 @@
 #define DOCTEST_CONFIG_IMPLEMENT
-//#include "doctest.h"
 #include <iostream>
+#include "doctest.h"
 #include "string.cpp"
+
+TEST_CASE("Constructors test")
+{
+    String str1;
+    String str2("Dimitar");
+    String str3(str2);
+
+    CHECK(str1.getLength() == 0);
+    CHECK(str1.getStr() == nullptr);
+    CHECK(str2.getLength() == 7);
+    CHECK(strcmp(str2.getStr(), "Dimitar") == 0);
+    CHECK(str3.getLength() == 7);
+    CHECK(strcmp(str3.getStr(), "Dimitar") == 0);
+}
+
+TEST_CASE("Operators test")
+{
+    String str1("Dimitar");
+    String str2;
+    String str3(" 7");
+    String str4;
+
+    str2 = str1;
+
+    CHECK(str2.getLength() == 7);
+    CHECK(strcmp(str2.getStr(), "Dimitar") == 0);
+
+    str2 += " Kolev";
+
+    CHECK(str2.getLength() == 13);
+    CHECK(strcmp(str2.getStr(), "Dimitar Kolev") == 0);
+
+    str2 += str3;
+
+    CHECK(str2.getLength() == 15);
+    CHECK(strcmp(str2.getStr(), "Dimitar Kolev 7") == 0);
+
+    str4 = str1 + " Nikolaev Kolev";
+
+    CHECK(str4.getLength() == 22);
+    CHECK(strcmp(str4.getStr(), "Dimitar Nikolaev Kolev") == 0);
+} 
 
 int main()
 {
-    String str1("Dimitar", 7);
-    String str2(str1);
-
-    std::cout << str1.getLength() << std::endl;
-
-    str1.add(" Kolev");
-    str1.output(); //Dimitar Kolev
-    str2.output(); //Dimitar
-
-    std::cout << str1.getLength() << std::endl; //13
-
-    str2.removeLast(); //Dimita
-    str2.removeLast(); //Dimit
-    str2.removeLast(); //Dimi
-    str2.removeLast(); //Dim
-
-    str2.output(); //Dim
-    std::cout << str2.getLength() << std::endl; //3
-
-    return 0;
+    doctest::Context().run();
 }

@@ -12,9 +12,9 @@ String::String()
     length = 0;
 };
 
-String::String(const char *_str, int _length)
+String::String(const char *_str)
 {
-    setLength(_length);
+    setLength(strlen(_str));
     setStr(_str);
 }
 
@@ -27,23 +27,149 @@ String::String(const String &other)
 String::~String()
 {
     delete[] str;
-    length = 0;
 }
 
 String &String::operator=(const String &other)
 {
     if (this != &other)
     {
-        delete[] this;
+        delete[] this->str;
 
-        this->length = other.length;
-        for (int i = 0; i < this->length; i++)
-        {
-            this->str[i] = other.str[i];
-        }
+        this->str = new char[other.length];
+
+        setLength(other.length);
+        setStr(other.str);
     }
 
     return *this;
+}
+
+String String::operator+=(const String &other)
+{
+    int newLength = this->length + other.length, index = 0;
+    char *biggerBuffer = new char[newLength];
+
+    for (int i = 0; i < this->length; i++)
+    {
+        biggerBuffer[i] = this->str[i];
+    }
+
+    for (int i = this->length; i < newLength; i++)
+    {
+        biggerBuffer[i] = other.str[index];
+        index++;
+    }
+
+    delete[] this->str;
+
+    this->str = biggerBuffer;
+    this->length = newLength;
+
+    return *this;
+}
+
+String String::operator+=(const char *_str)
+{
+    int newLength = this->length + strlen(_str), index = 0;
+    char *biggerBuffer = new char[newLength];
+
+    for (int i = 0; i < this->length; i++)
+    {
+        biggerBuffer[i] = this->str[i];
+    }
+
+    for (int i = this->length; i < newLength; i++)
+    {
+        biggerBuffer[i] = _str[index];
+        index++;
+    }
+
+    delete[] this->str;
+
+    this->str = biggerBuffer;
+    this->length = newLength;
+
+    return *this;
+}
+
+String String::operator+(const String &other)
+{
+    String res;
+
+    int resLength = this->length + other.length, index = 0;
+    char *resStr = new char[resLength];
+
+    for (int i = 0; i < this->length; i++)
+    {
+        resStr[i] = this->str[i];
+    }
+
+    for (int i = this->length; i < resLength; i++)
+    {
+        resStr[i] = other.str[index];
+        index++;
+    }
+
+    res.length = resLength;
+    res.str = resStr;
+
+    return res;
+}
+
+String String::operator+(const char *other)
+{
+    int resLength = this->length + strlen(other), index = 0;
+    char *resStr = new char[resLength];
+
+    for (int i = 0; i < this->length; i++)
+    {
+        resStr[i] = this->str[i];
+    }
+
+    for (int i = this->length; i < resLength; i++)
+    {
+        resStr[i] = other[index];
+        index++;
+    }
+
+    String res(resStr);
+
+    return res;
+}
+
+char String::operator[](const int index)
+{
+    return this->str[index];
+}
+
+bool String::operator!=(const String &other)
+{
+    return strcmp(this->str, other.str) != 0;
+}
+
+bool String::operator==(const String &other)
+{
+    return strcmp(this->str, other.str) == 0;
+}
+
+bool String::operator<(const String &other)
+{
+    return strcmp(this->str, other.str) < 0;
+}
+
+bool String::operator>(const String &other)
+{
+    return strcmp(this->str, other.str) > 0;
+}
+
+bool String::operator<=(const String &other)
+{
+    return strcmp(this->str, other.str) <= 0;
+}
+
+bool String::operator>=(const String &other)
+{
+    return strcmp(this->str, other.str) >= 0;
 }
 
 int String::getLength() const
@@ -75,7 +201,7 @@ void String::output()
     }
 
     std::cout << std::endl;
-}
+} 
 
 void String::add(const char *_str)
 {
@@ -85,7 +211,7 @@ void String::add(const char *_str)
     if (!biggerBuffer)
     {
         std::cout << "Not enough memory!" << std::endl;
-        biggerBuffer = nullptr;
+        delete[] biggerBuffer;
         return;
     }
 
@@ -128,6 +254,97 @@ void String::removeLast()
 
     this->str = smallerBuffer;
     this->length = this->length - 1;
+}
+
+String String::slice(int start, int end) const
+{
+    assert(start >= 0 && end < this->length && start <= end);
+
+    String res;
+
+    int _length = end - start + 1, index = start, resultIndex = 0;
+    char *result = new char[_length];
+
+    while (index <= end)
+    {
+        result[resultIndex] = this->str[index];
+        resultIndex++, index++;
+    }
+
+    result[_length] = '\0';
+
+    res.length = _length;
+    res.str = result;
+
+    return res;
+}
+
+bool String::isMatching(char *strToSearch, const char *strToMatch)
+{
+    for (int i = 0; *(strToMatch + i); i++)
+    {
+        if (strToSearch[i] != strToMatch[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void String::shiftLeft(char *strToShift, int shiftPosCount)
+{
+    int i = 0;
+
+    for (; *(strToShift + i); i++)
+    {
+        strToShift[i - shiftPosCount] = strToShift[i];
+    }
+
+    strToShift[i - shiftPosCount] = strToShift[i];
+}
+
+void String::shiftRight(char *strToShift, int shiftPosCount)
+{
+    int textLen = strlen(strToShift);
+    for (int i = textLen + 1; i >= 0; i--)
+    {
+        *(strToShift + i + shiftPosCount) = *(strToShift + i);
+    }
+}
+
+void String::performStringReplacement(char *source, const char *newWord)
+{
+    for (int i = 0; *(newWord + i); i++)
+    {
+        *(source + i) = *(newWord + i);
+    }
+}
+
+void String::replace(const char *oldWord, const char *newWord)
+{
+    int oldWordLen = strlen(oldWord);
+    int newWordLen = strlen(newWord);
+
+    for (int i = 0; *(this->str + i); i++)
+    {
+        if (isMatching(this->str + i, oldWord))
+        {
+            if (oldWordLen > newWordLen)
+            {
+                performStringReplacement(this->str + i, newWord);
+                shiftLeft(this->str + i + oldWordLen, oldWordLen - newWordLen);
+            }
+            else if (oldWordLen < newWordLen)
+            {
+                shiftRight(this->str + i + oldWordLen, newWordLen - oldWordLen);
+                performStringReplacement(this->str + i, newWord);
+            }
+            else
+            {
+                performStringReplacement(this->str + i, newWord);
+            }
+        }
+    }
 }
 
 #endif
