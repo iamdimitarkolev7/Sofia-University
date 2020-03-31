@@ -52,6 +52,20 @@ TEST_CASE("Operator+, operator+= and operator= test")
     CHECK(str4[5] == 'd');
 } 
 
+TEST_CASE("Bool operators test")
+{
+    String name1("Angel"), name2("Boyan"), name3("Angel"), name4("Anton");
+
+    CHECK((name1 == name3) == true);
+    CHECK((name1 != name2) == true);
+    CHECK((name1 == name2) == false);
+    CHECK((name1 < name2) == true);
+    CHECK((name1 > name2) == false);
+    CHECK(((name1 <= name3) && (name1 <= name4)) == true);
+    CHECK((name1 >= name3) == true);
+    CHECK(((name1 >= name2) && (name1 >= name4)) == false);
+}
+
 TEST_CASE("Methods test")
 {
     String str1;

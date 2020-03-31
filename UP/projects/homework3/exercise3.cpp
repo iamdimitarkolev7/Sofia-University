@@ -76,7 +76,7 @@ void remove(char *source, char *word)
     {
         if (isMatching(source + i, word))
         {
-            shiftLeft(source + i + strlen(word), strlen(word) + 1);
+            shiftLeft(source + i + strlen(word), strlen(word));
         }
     }
 }

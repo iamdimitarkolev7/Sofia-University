@@ -21,6 +21,8 @@ private:
     void shiftLeft(char *strToShift, int shiftPosCount);
     void shiftRight(char *strToShift, int shiftPosCount);
     void performStringReplacement(char *source, const char *newWord);
+    void setStr(const char *_str);
+    void setLength(int _length);
 
 public:
     String();
@@ -31,8 +33,6 @@ public:
 
     const char *getStr() const;
     int getLength() const;
-    void setStr(const char *_str);//
-    void setLength(int _length);//
 
     String operator+=(const String &other);
     String operator+=(const char *_str);
@@ -49,7 +49,7 @@ public:
     void output(); 
     void add(const char *_str);
     void removeLast();
-    String slice(int start, int end) const;     //???
+    String slice(int start, int end) const;
     void replace(const char *oldWord,const char *newWord);
 };
 
