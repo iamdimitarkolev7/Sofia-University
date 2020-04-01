@@ -8,6 +8,9 @@ private:
     int minutes;
     
 public:
+    Time() : hours(0), minutes(0) {}
+    Time(int _hours, int _minutes) : hours(_hours), minutes(_minutes) {}
+
     void init()
     {
         std::cout << "The time is " << this->hours << ":" << this->minutes << std::endl;
@@ -139,9 +142,7 @@ public:
 
 int main()
 {
-    Time time1;
-    time1.hours = 5;
-    time1.minutes = 19;
+    Time time1(5, 19);
 
     time1.init();
     time1.change(17, 39);
@@ -153,16 +154,14 @@ int main()
 
     std::cout << time1.totalMinutes() << std::endl;
 
-    Time time2;
-    time2.hours = 12;
-    time2.minutes = 30;
+    Time time2(12, 30);
     time2.init();
 
-    std::cout << (time1 < time2) << std::endl; //1
+    std::cout << (time1 < time2) << std::endl; 
     std::cout << (time1 == time2) << std::endl; //0
     
     Time time3;
-    time3 = time1 - 12; //11:18
+    time3 = time1 - 12;
     
     time3.init();
 

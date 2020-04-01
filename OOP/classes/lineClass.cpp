@@ -8,11 +8,10 @@ struct Point
 
 class Line
 {
-private:
+public:
     Point point1;
     Point point2;
 
-public:
     bool isParallel(Line otherLine)
     {
         bool checkX = (this->point1.x - otherLine.point1.x == this->point2.x - otherLine.point2.x);
@@ -23,8 +22,7 @@ public:
 
     bool isOnLine(Point p)
     {
-        return (this->point1.x <= p.x && this->point2.x >= p.x )
-            && (this->point1.y <= p.y && this->point2.y >= p.y);
+        return (this->point1.x <= p.x && this->point2.x >= p.x) && (this->point1.y <= p.y && this->point2.y >= p.y);
     }
 
     /*Point cross(Line otherLine)
@@ -58,8 +56,6 @@ int main()
 
     line3.point1.x = -1, line3.point1.y = 0;
     line3.point2.x = 5, line3.point2.y = 8;
-
-
 
     return 0;
 }

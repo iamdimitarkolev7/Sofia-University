@@ -148,7 +148,7 @@ String String::operator+(const char *other)
     return res;
 }
 
-char String::operator[](const int index)
+char String::operator[](const int index) const
 {
     assert(index >= 0 && index <= this->length);
     return this->str[index];

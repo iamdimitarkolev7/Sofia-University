@@ -18,6 +18,11 @@ public:
         strcpy(this->word, _word);
     }
 
+    const char *getWord() const
+    {
+        return this->word;
+    }
+
     void output ()
     {
         size_t length = strlen(this->word);
@@ -97,12 +102,12 @@ int main()
 
     if (word1 < word2)
     {
-        std::cout << word1.word <<" is smaller than " << word2.word << std::endl;
+        std::cout << word1.getWord() <<" is smaller than " << word2.getWord() << std::endl;
     }
 
     if (word1 > word2)
     {
-        std::cout << word1.word <<" is greater than " << word2.word << std::endl;
+        std::cout << word1.getWord() <<" is greater than " << word2.getWord() << std::endl;
     }
 
     if (word1 == word3)

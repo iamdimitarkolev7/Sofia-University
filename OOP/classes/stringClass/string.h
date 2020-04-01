@@ -1,9 +1,3 @@
-/*
-    Header file
-    Списък със заглавия на операцийте, които класът подържа
-    Всичко за класа, което трябва да знаем
-*/
-
 #ifndef __STRING_H
 #define __STRING_H
 
@@ -38,7 +32,8 @@ public:
     String operator+=(const char *_str);
     String operator+(const String &other);
     String operator+(const char *_str);
-    char operator[](const int index);
+    char operator[](const int index) const;
+    //char& operator[](const int index);
     bool operator!=(const String &other);
     bool operator==(const String &other);
     bool operator<(const String &other);
@@ -51,6 +46,10 @@ public:
     void removeLast();
     String slice(int start, int end) const;
     void replace(const char *oldWord,const char *newWord);
+    //toUpperCase();
+    //toLowerCase();
+    //trim();
+    //split();
 };
 
 #endif
