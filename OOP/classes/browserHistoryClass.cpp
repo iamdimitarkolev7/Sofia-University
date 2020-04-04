@@ -39,20 +39,12 @@ public:
         delete[] this->data;
     }
 
-    BrowserHistory operator=(const BrowserHistory &other)
+    BrowserHistory &operator=(const BrowserHistory &other)
     {
         if (this != &other)
         {
             delete[] this->data;
-            this->data = new (std::nothrow) HistoryEntry[other.length];
-
-            if (!this->data)
-            {
-                std::cout << "Not enough memory!" << std::endl;
-                this->data = nullptr;
-                this->length = 0;
-                return 0;
-            }
+            this->data = new HistoryEntry[other.length];
 
             for (int i = 0; i < other.length; i++)
             {

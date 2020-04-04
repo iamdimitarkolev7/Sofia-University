@@ -3,77 +3,82 @@
 
 class Time
 {
-private:
+    private:
     int hours;
     int minutes;
-    
-public:
+
+    void setHours(int _hours)
+    {
+        hours = _hours;
+    }
+
+    void setMinutes(int _minutes)
+    {
+        minutes = _minutes;
+    }
+
+    void copy(int _hours, int _minutes)
+    {
+        setHours(_hours);
+        setMinutes(_minutes);
+    }
+
+    public:
     Time() : hours(0), minutes(0) {}
     Time(int _hours, int _minutes) : hours(_hours), minutes(_minutes) {}
-
-    void init()
+    Time(const Time &other)
     {
-        std::cout << "The time is " << this->hours << ":" << this->minutes << std::endl;
+        copy(other.hours, other.minutes);
     }
 
-    void change(int new_hours, int new_minutes)
+    Time &operator=(const Time &other)
     {
-        while (new_hours < 0 || new_hours > 24)
+        if (this != &other)
         {
-            std::cout << "Wrong input! Please try again! Insert correct data for hours: ";
-            std::cin >> new_hours;
+            copy(other.hours, other.minutes);
         }
 
-        while (new_minutes < 0 || new_minutes >= 60)
-        {
-            std::cout << "Wrong input! Please try again! Insert correct data for minutes: ";
-            std::cin >> new_minutes;
-        }
-
-        this->hours = new_hours;
-        this->minutes = new_minutes;
+        return *this;
     }
 
-    Time operator+(int m) //adding minutes to current time
+    Time operator+(int _minutes) //adding minutes to current time
     {
-        this->minutes += m;
+        minutes += _minutes;
 
-        while (this->minutes > 60)
+        while (minutes > 60)
         {
-            this->hours += 1;
-            this->minutes -= 60;
+            hours += 1;
+            minutes -= 60;
         }
 
-        while (this->hours > 24)
+        while (hours > 24)
         {
-            this->hours -= 24;
+            hours -= 24;
         }
 
         Time result;
-        result.hours = this->hours;
-        result.minutes = this->minutes;
+        result.copy(hours, minutes);
 
         return result;
     }
 
-    Time operator-(int m) // minutes to current time
+    Time operator-(int _minutes) // removing minutes from current time
     {
-        this->minutes -= m;
+        minutes -= _minutes;
 
-        while (this->minutes < 0)
+        while (minutes < 0)
         {
-            this->hours -= 1;
-            this->minutes += 60;
+            hours -= 1;
+            minutes += 60;
         }
 
-        while (this->hours < 0)
+        while (hours < 0)
         {
-            this->hours += 24;
+            hours += 24;
         }
 
         Time result;
-        result.hours = this->hours;
-        result.minutes = this->minutes;
+        result.copy(hours, minutes);
 
         return result;
     }
@@ -102,7 +107,7 @@ public:
     {
         assert(this->minutes * num != 0);
 
-        std::cout << this->minutes << std::endl;
+        //std::cout << this->minutes << std::endl;
         this->minutes *= num;
 
         while (this->minutes > 60)
@@ -128,15 +133,46 @@ public:
         }
 
         Time result;
-        result.hours = this->hours;
-        result.minutes = this->minutes;
+        result.copy(this->hours, this->minutes);
 
         return result;
+    }
+
+    int getHours()
+    {
+        return hours;
+    }
+
+    int getMinutes()
+    {
+        return minutes;
     }
 
     int totalMinutes()
     {
         return this->hours * 60 + this->minutes;
+    }
+    
+    void init()
+    {
+        std::cout << "The time is " << hours << ":" << minutes << std::endl;
+    }
+
+    void change(int newHours, int newMinutes)
+    {
+        while (newHours < 0 || newHours > 24)
+        {
+            std::cout << "Wrong input! Please try again! Insert correct data for hours: ";
+            std::cin >> newHours;
+        }
+
+        while (newMinutes < 0 || newMinutes >= 60)
+        {
+            std::cout << "Wrong input! Please try again! Insert correct data for minutes: ";
+            std::cin >> newMinutes;
+        }
+
+        copy(newHours, newMinutes);
     }
 };
 
@@ -171,5 +207,9 @@ int main()
     time3 = time3 * 5; //17:45
     time3.init();
 
-    return 0;
+    Time time4;
+    time4 = time3;
+    std::cout << time4.getHours() << ":" << time4.getMinutes() << std::endl;
+
+    return 0; 
 }

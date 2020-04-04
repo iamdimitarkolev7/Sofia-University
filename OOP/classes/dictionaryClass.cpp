@@ -106,7 +106,7 @@ public:
             {
                 strcpy(translationToAdd, otherDictionary.data[i].translation);
 
-                if (!strcmp(this->data[j].word, otherDictionary.data[i].word))
+                if (strcmp(this->data[j].word, otherDictionary.data[i].word) == 0)
                 {
                     result.removeWord(this->data[j].word);
                     strcat(translationToAdd, "/");
@@ -133,7 +133,7 @@ int main()
     dict1.addWord("Dance", "tanc");
     dict1.addWord("GOAT", "KOZA");
     dict1.output();
-    //dict1.removeWord("Season");
+    dict1.removeWord("Season");
     dict1.output();
 
     Dictionary dict2, dict3;
