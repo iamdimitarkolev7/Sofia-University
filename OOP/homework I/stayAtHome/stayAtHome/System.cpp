@@ -189,24 +189,19 @@ void System::run()
             if (!uniqueChallenges.contains(challenge))
             {
                 uniqueChallenges.push(_challenge);
-
-                for (int i = 0; i < uniqueChallenges.getSize(); i++)
-                {
-                    std::cout << "Challenge: " << uniqueChallenges[i].getName() << std::endl;
-                }
             }
-            /*else
+            else
             {
                 for (int i = 0; i < uniqueChallenges.getSize(); i++)
                 {
-                    if (strcmp(uniqueChallenges[i].getName(), challenge))
+                    if (strcmp(uniqueChallenges[i].getName(), challenge) == 0)
                     {
                         uniqueChallenges[i].incrementOcc();
                     }
                 }
             }
 
-            uniqueChallenges.print();*/
+            uniqueChallenges.print();
         }
         else if (strcmp(input, "finish") == 0)
         {

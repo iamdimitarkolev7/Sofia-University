@@ -4,7 +4,8 @@
 
 Challenge::Challenge()
 {
-	strcpy(name, "");
+	name = new char[1];
+	name[0] = '\0';
 	occ = 0;
 	rating = 0;
 	currSum = 0;
@@ -13,6 +14,7 @@ Challenge::Challenge()
 
 Challenge::Challenge(const char* _name)
 {
+	name = new char[strlen(_name) + 1];
 	strcpy(name, _name);
 	occ = 1;
 	rating = 0; 
@@ -20,9 +22,18 @@ Challenge::Challenge(const char* _name)
 	numOfRaters = 0;
 }
 
+Challenge::Challenge(const Challenge& other)
+{
+	strcpy(name, other.name);
+	occ = other.occ;
+	rating = other.rating;
+	currSum = other.currSum;
+	numOfRaters = other.numOfRaters;
+}
+
 Challenge::~Challenge()
 {
-
+	delete[] name;
 }
 
 bool Challenge::isValid()
@@ -45,9 +56,24 @@ bool Challenge::isValid()
 	return true;
 }
 
-const char* Challenge::getName() const
+char* Challenge::getName() const
 {
 	return name;
+}
+
+double Challenge::getRating() const
+{
+	return rating;
+}
+
+double Challenge::getCurrSum() const
+{
+	return currSum;
+}
+
+int Challenge::getNumOfRaters() const
+{
+	return numOfRaters;
 }
 
 void Challenge::incrementOcc()
@@ -55,7 +81,7 @@ void Challenge::incrementOcc()
 	occ++;
 }
 
-int Challenge::getOcc()
+int Challenge::getOcc() const
 {
 	return occ;
 }
@@ -64,11 +90,13 @@ Challenge& Challenge::operator=(const Challenge& other)
 {
 	if (this != &other)
 	{
-		std::fill_n(name, 512, 0);
+		delete[] name;
+		name = new char[strlen(other.name)];
 		strcpy(name, other.name);
 		occ = other.occ;
 		rating = other.rating;
 		currSum = other.currSum;
+		numOfRaters = other.numOfRaters;
 	}
 
 	return *this;

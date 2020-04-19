@@ -5,7 +5,7 @@
 class Challenge
 {
 private:
-	char name[32];
+	char* name;
 	int occ;
 	double rating, currSum;
 	int numOfRaters;
@@ -13,12 +13,16 @@ private:
 public:
 	Challenge();
 	Challenge(const char* name);
+	Challenge(const Challenge& other);
 	~Challenge();
 
 	bool isValid();
-	const char* getName() const;
-	void incrementOcc();
-	int getOcc();
+	char* getName() const;
+	int getOcc() const;
+	double getRating() const;
+	double getCurrSum() const;
+	int getNumOfRaters() const;
+ 	void incrementOcc();
 
 	Challenge& operator=(const Challenge& other);
 

@@ -4,7 +4,7 @@
 
 User::User()
 {
-	strcpy(name, "");
+	name = nullptr;
 	strcpy(age, "");
 	strcpy(email, "");
 	ID = 0;
@@ -12,6 +12,8 @@ User::User()
 
 User::User(const char* _name, const char* _age, const char* _email, int _ID)
 {
+	name = new char[strlen(_name) + 1];
+
 	strcpy(name, _name);
 	strcpy(age, _age);
 	strcpy(email, _email);
@@ -20,7 +22,7 @@ User::User(const char* _name, const char* _age, const char* _email, int _ID)
 
 User::~User()
 {
-
+	delete[] name;
 }
 
 bool User::isValid()
@@ -52,7 +54,7 @@ bool User::isAgeValid()
 		return true;
 	}
 
-	if (length >= 3 || (age[0] == '9' && age[1] >= '1' && age[1] <= '2'))
+	if (length >= 3 || (age[0] == '9' && age[1] >= '1' && age[1] <= '9'))
 	{
 		std::cout << "Invalid age! Age must consists only digits and must be in the interval [1-90]" << std::endl;
 		return false;
@@ -63,41 +65,38 @@ bool User::isAgeValid()
 
 char* User::getName() const
 {
-	char* _name;
-	int length = strlen(name);
-
-	_name = new char[length];
-
-	strcpy(_name, name);
-
-	return _name;
+	return name;
 }
 
-char* User::getAge() const
+const char* User::getAge() const
 {
-	char* _age;
-	int length = strlen(age);
-
-	_age = new char[length];
-
-	strcpy(_age, age);
-
-	return _age;
+	return age;
 }
 
-char* User::getEmail() const
+const char* User::getEmail() const
 {
-	char* _email;
-	int length = strlen(email);
-
-	_email = new char[length];
-
-	strcpy(_email, email);
-
-	return _email;
+	return email;
 }
 
 int User::getID() const
 {
 	return ID;
+}
+
+User& User::operator=(const User& other)
+{
+	if (this != &other)
+	{
+		delete[] name;
+
+		name = new char[strlen(other.name) + 1];
+
+		strcpy(name, other.name);
+		strcpy(age, other.age);
+		strcpy(email, other.email);
+		unfinished = other.unfinished;
+		ID = other.ID;
+	}
+
+	return *this;
 }

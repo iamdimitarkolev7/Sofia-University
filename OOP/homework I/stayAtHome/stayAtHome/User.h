@@ -7,11 +7,11 @@
 class User
 {
 private:
-	char name[512];
+	char *name;
 	char age[10];
 	char email[100];
 	int ID;
-	ChallengesArray challenges;
+	ChallengesArray unfinished;
 
 	bool isNameValid();
 	bool isAgeValid();
@@ -22,10 +22,11 @@ public:
 	~User();
 
 	char* getName() const;
-	char* getAge() const;
-	char* getEmail() const;
+	const char* getAge() const;
+	const char* getEmail() const;
 	int getID() const;
 	bool isValid();
+	User& operator=(const User& other);
 };
 
 #endif

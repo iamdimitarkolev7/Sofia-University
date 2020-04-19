@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClInclude Include="Challenge.h" />
     <ClInclude Include="ChallengesArray.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="VectorUser.h" />
