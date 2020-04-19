@@ -13,20 +13,28 @@ ChallengesArray::~ChallengesArray()
 	delete[] challenges;
 }
 
-void ChallengesArray::push(const Challenge& challenge)
+void ChallengesArray::push(const Challenge& _challenge)
 {
-	Challenge* biggerBuffer = new Challenge[size + 1];
+	int newSize = size + 1;
+
+	Challenge* biggerBuffer = new Challenge[newSize];
+
+	if (!biggerBuffer)
+	{
+		std::cout << "Not enough memory!" << std::endl;
+		return;
+	}
 
 	for (int i = 0; i < size; i++)
 	{
 		biggerBuffer[i] = challenges[i];
 	}
 
-	biggerBuffer[size] = challenge;
+	biggerBuffer[size] = _challenge;
 
 	delete[] challenges;
 
-	size = size + 1;
+	size = newSize;
 	challenges = biggerBuffer;
 }
 
@@ -60,4 +68,20 @@ void ChallengesArray::print()
 		std::cout << "Challenge: " << challenges[i].getName() << std::endl;
 		std::cout << "Occ: " << challenges[i].getOcc() << std::endl;
 	}
+}
+
+ChallengesArray& ChallengesArray::operator=(const ChallengesArray& other)
+{
+	if (this != &other)
+	{
+		delete[] challenges;
+		size = other.size;
+		challenges = new Challenge[size];
+
+		for (int i = 0; i < size; i++)
+		{
+			challenges[i] = other.challenges[i];
+		}
+	}
+	return *this;
 }

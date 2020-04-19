@@ -21,7 +21,7 @@ void VectorUser::push(const User& user)
 
 	if (!biggerBuffer)
 	{
-		std::cout << "Not enoug memory!" << std::endl;
+		std::cout << "Not enough memory!" << std::endl;
 		return;
 	}
 
@@ -67,4 +67,21 @@ void VectorUser::print()
 	{
 		std::cout << "User: " << users[i].getName() << std::endl;
 	}
+}
+
+VectorUser &VectorUser::operator=(const VectorUser& other)
+{
+	if (this != &other)
+	{
+		delete[] users;
+		size = other.size;
+		users = new User[size];
+
+		for (int i = 0; i < size; i++)
+		{
+			users[i] = other.users[i];
+		}
+	}
+
+	return *this;
 }

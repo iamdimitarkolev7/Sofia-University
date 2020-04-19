@@ -200,8 +200,6 @@ void System::run()
                     }
                 }
             }
-
-            uniqueChallenges.print();
         }
         else if (strcmp(input, "finish") == 0)
         {

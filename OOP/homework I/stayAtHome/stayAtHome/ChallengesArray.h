@@ -16,5 +16,6 @@ public:
 	Challenge& operator[](int i);
 	bool contains(const char* userName);
 	void print();
+	ChallengesArray& operator=(const ChallengesArray& other);
 };
 

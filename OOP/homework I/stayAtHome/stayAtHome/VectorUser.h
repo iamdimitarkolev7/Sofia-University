@@ -18,6 +18,7 @@ public:
 	User& operator[](int i);
 	bool contains(const char* userName);
 	void print();
+	VectorUser& operator=(const VectorUser& other);
 };
 
 #endif

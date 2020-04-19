@@ -4,8 +4,7 @@
 
 Challenge::Challenge()
 {
-	name = new char[1];
-	name[0] = '\0';
+	name = nullptr;
 	occ = 0;
 	rating = 0;
 	currSum = 0;
@@ -53,6 +52,12 @@ bool Challenge::isValid()
 		}
 	}
 
+	if (strlen(name) > 32)
+	{
+		std::cout << "Invalid challenge! Name of challenge is too long!" << std::endl;
+		return false;
+	}
+
 	return true;
 }
 
@@ -91,14 +96,13 @@ Challenge& Challenge::operator=(const Challenge& other)
 	if (this != &other)
 	{
 		delete[] name;
-		name = new char[strlen(other.name)];
+		name = new char[strlen(other.name) + 1];
 		strcpy(name, other.name);
 		occ = other.occ;
 		rating = other.rating;
 		currSum = other.currSum;
 		numOfRaters = other.numOfRaters;
 	}
-
 	return *this;
 }
 
