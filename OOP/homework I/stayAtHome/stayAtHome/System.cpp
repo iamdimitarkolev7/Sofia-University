@@ -42,6 +42,12 @@ void System::registration(const User& user)
 
 void System::profile_info(const char* _name)
 {
+    if (!users.contains(_name))
+    {
+        std::cout << "No such user in user list! " << std::endl;
+        return;
+    }
+
     for (int i = 0; i < users.getSize(); i++)
     {
         if (strcmp(_name, users[i].getName()) == 0)
@@ -64,7 +70,7 @@ void System::list_by(const char* sort)
         std::fill_n(status, 512, 0);
         std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
-        for (int i = 0; i < uniqueChallenges.getSize(); i++)
+        for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
         {
             if (uniqueChallenges[i].getOcc() == 1)
                 strcpy(status, "new");
@@ -73,7 +79,7 @@ void System::list_by(const char* sort)
                 strcpy(status, "quite recently");
                 std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
                     << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
-                return;
+                continue;
             }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
@@ -88,7 +94,7 @@ void System::list_by(const char* sort)
         std::fill_n(status, 512, 0);
         std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
-        for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
+        for (int i = 0; i < uniqueChallenges.getSize(); i++)
         {
             if (uniqueChallenges[i].getOcc() == 1)
                 strcpy(status, "new");
@@ -97,7 +103,7 @@ void System::list_by(const char* sort)
                 strcpy(status, "quite recently");
                 std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
                     << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
-                return;
+                continue;
             }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
@@ -106,25 +112,45 @@ void System::list_by(const char* sort)
                 << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
         }
     }
-    /*else if (strcmp(sort, "most_popular") == 0)
+    else if (strcmp(sort, "most_popular") == 0)
     {
         char status[512];
         std::fill_n(status, 512, 0);
         std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
-        for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
+        Challenge temp;
+
+        for (int i = 0; i < uniqueChallenges.getSize(); i++)
+        {
+            for (int j = 0; j < uniqueChallenges.getSize() - i; j++)
+            {
+                if (uniqueChallenges[i].getOcc() < uniqueChallenges[i + 1].getOcc())
+                {
+                    temp = uniqueChallenges[i];
+                    uniqueChallenges[i] = uniqueChallenges[i + 1];
+                    uniqueChallenges[i + 1] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < uniqueChallenges.getSize(); i++)
         {
             if (uniqueChallenges[i].getOcc() == 1)
                 strcpy(status, "new");
             else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
+            {
                 strcpy(status, "quite recently");
+                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                    << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+                continue;
+            }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
 
-            std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
+            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
                 << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
         }
-    }*/
+    }
     else
     {
         std::cout << "Invalid sort method!" << std::endl;
@@ -434,8 +460,6 @@ void System::run()
                     strcpy(_grade, token);
                     grade = charToDouble(_grade);
 
-                    std::cout << "Grade: " << grade << std::endl;
-
                     if (grade < -5.0 || grade > 10.0)
                     {
                         std::cout << "Invalid rating! rating must be in [-5; 10] interval!" << std::endl;
@@ -508,16 +532,51 @@ void System::run()
             token = strtok(NULL, ".");
             strcpy(fileExt, token);
 
-            if (strcmp(fileExt, "txt") == 0)
+            if (strcmp(fileExt, "txt") == 0) //users
             {
-                
-            }
+                file.open(fullFileName, std::ios::out);
 
+                if (file.is_open())
+                {
+                    file << "Users list: \n";
+
+                    for (int i = 0; i < users.getSize(); i++)
+                    {
+                        file << users[i].getName() << " \t";
+                        file << users[i].getAge() << " \t";
+                        file << users[i].getEmail() << " \t";
+                        file << users[i].getID() << " \t";
+                        file << "\n";
+                    }
+
+                    file.close();
+                }
+                else
+                {
+                    std::cout << "File is not opened!" << std::endl;
+                    break;
+                }
+            }
             else if (strcmp(fileExt, "bin") == 0)
             {
+                file.open(fullFileName, std::ios::out | std::ios::binary);
 
+                if (!file)
+                {
+                    std::cout << "File is not opened!" << std::endl;
+                    break;
+                }
+
+                file.write("Unique challenges list: \n", sizeof("Unique challenges list: \n"));
+
+                for (int i = 0; i < uniqueChallenges.getSize(); i++)
+                {
+                    file.write(uniqueChallenges[i].getName(), sizeof(uniqueChallenges[i].getName()));
+                    file.write("\n", sizeof("\n"));
+                }
+
+                file.close();
             }
-
             else
             {
                 std::cout << "Wrong file extension!" << std::endl;
