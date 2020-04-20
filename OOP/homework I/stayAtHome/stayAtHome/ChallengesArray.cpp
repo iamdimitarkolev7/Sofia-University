@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cassert>
 #include "ChallengesArray.h"
 
 ChallengesArray::ChallengesArray()
@@ -36,6 +37,36 @@ void ChallengesArray::push(const Challenge& _challenge)
 
 	size = newSize;
 	challenges = biggerBuffer;
+}
+
+void ChallengesArray::remove(const char* challengeName)
+{
+	assert(size - 1 >= 0);
+	int newSize = size - 1, index = 0;
+
+	Challenge* smallerBuffer = new Challenge[newSize];
+
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << "Name: " << challenges[i].getName() << std::endl;
+		if (strcmp(challengeName, challenges[i].getName()) != 0)
+		{
+			smallerBuffer[index] = challenges[i];
+			index++;
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	if (challenges != nullptr)
+	{
+		delete[] challenges;
+	}
+
+	challenges = smallerBuffer;
+	size = newSize;
 }
 
 Challenge& ChallengesArray::operator[](int i)

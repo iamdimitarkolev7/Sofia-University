@@ -100,3 +100,23 @@ User& User::operator=(const User& other)
 
 	return *this;
 }
+
+ChallengesArray User::getUnfinished()
+{
+	return unfinished;
+}
+
+void User::addChallenge(const Challenge& challenge)
+{
+	if (!unfinished.contains(challenge.getName()))
+	{
+		unfinished.push(challenge);
+	}
+
+	return;
+}
+
+void User::removeChallenge(const char* challengeName)
+{
+	unfinished.remove(challengeName);
+}

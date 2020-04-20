@@ -20,13 +20,16 @@ public:
 	User();
 	User(const char* _name, const char* _age, const char* _email, int _ID);
 	~User();
+	User& operator=(const User& other);
 
 	char* getName() const;
 	const char* getAge() const;
 	const char* getEmail() const;
 	int getID() const;
 	bool isValid();
-	User& operator=(const User& other);
+	ChallengesArray getUnfinished();
+	void addChallenge(const Challenge& challenge);
+	void removeChallenge(const char* challengeName);
 };
 
 #endif

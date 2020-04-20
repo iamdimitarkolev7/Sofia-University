@@ -12,9 +12,10 @@ public:
 	~ChallengesArray();
 
 	size_t getSize() const;
-	void push(const Challenge& user);
+	void push(const Challenge& challenge);
+	void remove(const char* challengeName);
 	Challenge& operator[](int i);
-	bool contains(const char* userName);
+	bool contains(const char* challengeName);
 	void print();
 	ChallengesArray& operator=(const ChallengesArray& other);
 };

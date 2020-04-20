@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <cmath>
+#include <fstream>
 #include "System.h"
 #include "User.h"
 #include "VectorUser.h"
@@ -44,6 +46,7 @@ void System::profile_info(const char* _name)
     {
         if (strcmp(_name, users[i].getName()) == 0)
         {
+            std::cout << std::endl;
             std::cout << "Name: " << users[i].getName() << std::endl;
             std::cout << "Email: " << users[i].getEmail() << std::endl;
             std::cout << "Age: " << users[i].getAge() << std::endl;
@@ -51,6 +54,84 @@ void System::profile_info(const char* _name)
             std::cout << std::endl;
         }
     }
+}
+
+void System::list_by(const char* sort)
+{
+    if (strcmp(sort, "newest") == 0)
+    {
+        char status[512];
+        std::fill_n(status, 512, 0);
+        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+
+        for (int i = 0; i < uniqueChallenges.getSize(); i++)
+        {
+            if (uniqueChallenges[i].getOcc() == 1)
+                strcpy(status, "new");
+            else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
+            {
+                strcpy(status, "quite recently");
+                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                    << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+                return;
+            }
+            else if (uniqueChallenges[i].getOcc() > 10)
+                strcpy(status, "old");
+
+            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+        }
+    } 
+    else if (strcmp(sort, "oldest") == 0)
+    {
+        char status[512];
+        std::fill_n(status, 512, 0);
+        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+
+        for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
+        {
+            if (uniqueChallenges[i].getOcc() == 1)
+                strcpy(status, "new");
+            else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
+            {
+                strcpy(status, "quite recently");
+                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                    << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+                return;
+            }
+            else if (uniqueChallenges[i].getOcc() > 10)
+                strcpy(status, "old");
+
+            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+        }
+    }
+    /*else if (strcmp(sort, "most_popular") == 0)
+    {
+        char status[512];
+        std::fill_n(status, 512, 0);
+        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+
+        for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
+        {
+            if (uniqueChallenges[i].getOcc() == 1)
+                strcpy(status, "new");
+            else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
+                strcpy(status, "quite recently");
+            else if (uniqueChallenges[i].getOcc() > 10)
+                strcpy(status, "old");
+
+            std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
+                << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
+        }
+    }*/
+    else
+    {
+        std::cout << "Invalid sort method!" << std::endl;
+    }
+
+    return;
+
 }
 
 void System::help()
@@ -74,6 +155,92 @@ bool System::isNumber(char* s)
             return false;
 
     return true;
+}
+
+int System::charToInt(char* s)
+{
+    int startIndex = 0;
+    bool isNegative = false;
+
+    if (s[0] == '-')
+    {
+        isNegative = true;
+        startIndex = 1;
+    }
+
+    int length = strlen(s);
+    int result = 0;
+
+    for (int i = startIndex; i < length; i++)
+    {
+        int currentDigit = s[i] - '0';
+        result += currentDigit * std::pow(10, length - i - 1);
+    }
+
+    if (isNegative)
+    {
+        return -result;
+    }
+
+    return result;
+}
+
+double System::charToDouble(char* s)
+{
+    int length = strlen(s);
+    double result = 0, ind = 10;
+    int index = indexOf(s, '.');
+    int startIndex = 0;
+    bool isNegative = false;
+
+    if (s[0] == '-')
+    {
+        isNegative = true;
+        startIndex = 1;
+    }
+
+    if (index == 0)
+    {
+        return (double)charToInt(s);
+    }
+
+    for (int i = startIndex; i < length; i++)
+    {
+        if (index > i)
+        {
+            int currentDigit = s[i] - '0';
+            result += currentDigit * std::pow(10, index - i - 1);
+        }
+        else if (index < i)
+        {
+            int currentDigit = s[i] - '0';
+            double adding = currentDigit / ind;
+            result += adding;
+            ind *= 10;
+        }
+    }
+
+    if (isNegative)
+    {
+        return -result;
+    }
+
+    return result;
+}
+
+int System::indexOf(char* s, char sym)
+{
+    int index = 0;
+
+    for (int i = 0; i < strlen(s); i++)
+    {
+        if (s[i] == sym)
+        {
+            index = i;
+        }
+    }
+
+    return index;
 }
 
 void System::run()
@@ -140,6 +307,7 @@ void System::run()
         {
             char name1[NAME_LENGTH], challenge[CHALLENGE_LENGTH], names[20][NAME_LENGTH];
             token = strtok(NULL, " ");
+            bool continueProgram = true;
             int counter = 0, index = 0;
             std::fill_n(name1, NAME_LENGTH, 0), std::fill_n(challenge, CHALLENGE_LENGTH, 0);
             for (int i = 0; i < 20; i++)
@@ -153,7 +321,7 @@ void System::run()
                     if (!users.contains(name1))
                     {
                         std::cout << "Name \'" << name1 << "\' is not in the user list!" << std::endl;
-                        break;
+                        continueProgram = false;
                     }
 
                     counter++;
@@ -164,7 +332,7 @@ void System::run()
                     Challenge chall(challenge);
 
                     if (!chall.isValid())
-                        break;
+                        continueProgram = false;
 
                     counter++;
                 }
@@ -174,8 +342,8 @@ void System::run()
 
                     if (!users.contains(names[index]))
                     {
-                        std::cout << "\'" << names[index] << "\' not in users list" << std::endl;
-                        break;
+                        std::cout << "Name \'" << names[index] << "\' not in users list" << std::endl;
+                        continueProgram = false;
                     }
 
                     index++;
@@ -184,26 +352,129 @@ void System::run()
                 token = strtok(NULL, " ");
             }
 
-            Challenge _challenge(challenge);
+            if (continueProgram)
+            {
+                Challenge _challenge(challenge);
 
-            if (!uniqueChallenges.contains(challenge))
-            {
-                uniqueChallenges.push(_challenge);
-            }
-            else
-            {
-                for (int i = 0; i < uniqueChallenges.getSize(); i++)
+                if (!uniqueChallenges.contains(challenge))
                 {
-                    if (strcmp(uniqueChallenges[i].getName(), challenge) == 0)
+                    uniqueChallenges.push(_challenge);
+                }
+                else
+                {
+                    for (int i = 0; i < uniqueChallenges.getSize(); i++)
                     {
-                        uniqueChallenges[i].incrementOcc();
+                        if (strcmp(uniqueChallenges[i].getName(), challenge) == 0)
+                        {
+                            uniqueChallenges[i].incrementOcc();
+                        }
                     }
                 }
+
+                for (int i = 0; i < index; i++)
+                {
+                    for (int j = 0; j < users.getSize(); j++)
+                    {
+                        if (strcmp(names[i], users[j].getName()) == 0)
+                        {
+                            users[j].addChallenge(_challenge);
+                        }
+                    }
+                }
+
+                std::cout << "Successfully challenged!" << std::endl;
             }
         }
         else if (strcmp(input, "finish") == 0)
         {
-            //finish
+            token = strtok(NULL, " ");
+            int counter = 0;
+            char challName[CHALLENGE_LENGTH], _userId[5], _grade[10];
+            std::fill_n(challName, CHALLENGE_LENGTH, 0), std::fill_n(_userId, 5, 0), std::fill_n(_grade, 10, 0);
+
+            strcpy(challName, token);
+            int userId = 0;
+            double grade = 0;
+            bool isValidId = false, continueProgram = true;
+
+            while (token)
+            {
+                if (counter == 0)
+                {
+                    counter++;
+                    if (!uniqueChallenges.contains(challName))
+                    {
+                        std::cout << "No such challenge!" << std::endl;
+                        continueProgram = false;
+                    }
+                }
+                else if (counter == 1)
+                {
+                    counter++;
+                    strcpy(_userId, token);
+
+                    userId = charToInt(_userId);
+
+                    for (int i = 0; i < users.getSize(); i++)
+                    {
+                        if (users[i].getID() == userId)
+                        {
+                            isValidId = true;
+                        }
+                    }
+
+                    if (!isValidId)
+                    {
+                        std::cout << "No user with such ID!" << std::endl;
+                        continueProgram = false;
+                    }
+                }
+                else
+                {
+                    strcpy(_grade, token);
+                    grade = charToDouble(_grade);
+
+                    std::cout << "Grade: " << grade << std::endl;
+
+                    if (grade < -5.0 || grade > 10.0)
+                    {
+                        std::cout << "Invalid rating! rating must be in [-5; 10] interval!" << std::endl;
+                        continueProgram = false;
+                    }
+                }
+
+                token = strtok(NULL, " ");
+            }
+
+            if (continueProgram)
+            {
+                /*
+                for (int i = 0; i < users.getSize(); i++)
+                {
+                    if (userId == users[i].getID())
+                    {
+                        if (!(users[i].getUnfinished()).contains(challName))
+                        {
+                            std::cout << "Selected user has no data for this challenge!" << std::endl;
+                            break;
+                        }
+                        else
+                        {
+                            //users[i].removeChallenge(challName);
+                        }
+                    }
+                }
+                */
+
+                for (int i = 0; i < uniqueChallenges.getSize(); i++)
+                {
+                    if (strcmp(uniqueChallenges[i].getName(), challName) == 0)
+                    {
+                        uniqueChallenges[i].updateData(grade);
+                    }
+                }
+            }
+
         }
         else if (strcmp(input, "profile_info") == 0)
         {
@@ -216,11 +487,41 @@ void System::run()
         }
         else if (strcmp(input, "list_by") == 0)
         {
-            //list_by
+            token = strtok(NULL, " ");
+            char sort[512];
+            std::fill_n(sort, 512, 0);
+            strcpy(sort, token);
+
+            list_by(sort);
         }
         else if (strcmp(input, "load") == 0)
         {
-            //load
+            std::fstream file;
+
+            token = strtok(NULL, " ");
+            char fullFileName[512], fileName[16], fileExt[16];
+            strcpy(fullFileName, token);
+
+            token = strtok(fullFileName, ".");
+            strcpy(fileName, token);
+
+            token = strtok(NULL, ".");
+            strcpy(fileExt, token);
+
+            if (strcmp(fileExt, "txt") == 0)
+            {
+                
+            }
+
+            else if (strcmp(fileExt, "bin") == 0)
+            {
+
+            }
+
+            else
+            {
+                std::cout << "Wrong file extension!" << std::endl;
+            }
         }
         else if (strcmp(input, "help") == 0)
         {

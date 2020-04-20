@@ -15,7 +15,7 @@ public:
     //challenge
     //finish
     void profile_info(const char* name);
-    //list_by
+    void list_by(const char* sort);
     //load
     void help();
     void run();
@@ -24,6 +24,9 @@ private:
     System();
 
     bool isNumber(char* s);
+    int charToInt(char* s);
+    double charToDouble(char* s);
+    int indexOf(char* s, char sym);
 };
 
 #endif

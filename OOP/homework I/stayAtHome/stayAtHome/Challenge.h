@@ -23,6 +23,7 @@ public:
 	double getCurrSum() const;
 	int getNumOfRaters() const;
  	void incrementOcc();
+	void updateData(double rating);
 
 	Challenge& operator=(const Challenge& other);
 

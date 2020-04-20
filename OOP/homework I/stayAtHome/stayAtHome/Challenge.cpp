@@ -106,6 +106,13 @@ Challenge& Challenge::operator=(const Challenge& other)
 	return *this;
 }
 
+void Challenge::updateData(double _rating)
+{
+	numOfRaters++;
+	currSum += _rating;
+	rating = currSum / numOfRaters;
+}
+
 void Challenge::print()
 {
 	std::cout << "name: " << name << std::endl;
