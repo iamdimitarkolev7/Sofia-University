@@ -68,7 +68,7 @@ void System::list_by(const char* sort)
     {
         char status[512];
         std::fill_n(status, 512, 0);
-        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+        std::cout << "Tag\t\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
         for (int i = uniqueChallenges.getSize() - 1; i >= 0; i--)
         {
@@ -77,14 +77,14 @@ void System::list_by(const char* sort)
             else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
             {
                 strcpy(status, "quite recently");
-                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                     << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
                 continue;
             }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
 
-            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+            std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                 << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
         }
     } 
@@ -92,7 +92,7 @@ void System::list_by(const char* sort)
     {
         char status[512];
         std::fill_n(status, 512, 0);
-        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+        std::cout << "Tag\t\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
         for (int i = 0; i < uniqueChallenges.getSize(); i++)
         {
@@ -101,14 +101,14 @@ void System::list_by(const char* sort)
             else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
             {
                 strcpy(status, "quite recently");
-                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                     << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
                 continue;
             }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
 
-            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+            std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                 << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
         }
     }
@@ -116,7 +116,7 @@ void System::list_by(const char* sort)
     {
         char status[512];
         std::fill_n(status, 512, 0);
-        std::cout << "Tag\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
+        std::cout << "Tag\t\t\tRating\tStatus\t\tTotal\tDone\t" << std::endl;
 
         Challenge temp;
 
@@ -124,11 +124,11 @@ void System::list_by(const char* sort)
         {
             for (int j = 0; j < uniqueChallenges.getSize() - i; j++)
             {
-                if (uniqueChallenges[i].getOcc() < uniqueChallenges[i + 1].getOcc())
+                if (uniqueChallenges[j].getOcc() < uniqueChallenges[j + 1].getOcc())
                 {
-                    temp = uniqueChallenges[i];
-                    uniqueChallenges[i] = uniqueChallenges[i + 1];
-                    uniqueChallenges[i + 1] = temp;
+                    temp = uniqueChallenges[j];
+                    uniqueChallenges[j] = uniqueChallenges[j + 1];
+                    uniqueChallenges[j + 1] = temp;
                 }
             }
         }
@@ -140,14 +140,14 @@ void System::list_by(const char* sort)
             else if (uniqueChallenges[i].getOcc() >= 2 && uniqueChallenges[i].getOcc() <= 10)
             {
                 strcpy(status, "quite recently");
-                std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+                std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                     << status << "\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
                 continue;
             }
             else if (uniqueChallenges[i].getOcc() > 10)
                 strcpy(status, "old");
 
-            std::cout << uniqueChallenges[i].getName() << "\t\t" << uniqueChallenges[i].getRating() << "\t"
+            std::cout << uniqueChallenges[i].getName() << "\t\t\t" << uniqueChallenges[i].getRating() << "\t"
                 << status << "\t\t" << uniqueChallenges[i].getOcc() << "\t" << uniqueChallenges[i].getNumOfRaters() << std::endl;
         }
     }
@@ -472,23 +472,13 @@ void System::run()
 
             if (continueProgram)
             {
-                /*
                 for (int i = 0; i < users.getSize(); i++)
                 {
                     if (userId == users[i].getID())
                     {
-                        if (!(users[i].getUnfinished()).contains(challName))
-                        {
-                            std::cout << "Selected user has no data for this challenge!" << std::endl;
-                            break;
-                        }
-                        else
-                        {
-                            //users[i].removeChallenge(challName);
-                        }
+                        users[i].removeChallenge(challName);
                     }
                 }
-                */
 
                 for (int i = 0; i < uniqueChallenges.getSize(); i++)
                 {
@@ -497,6 +487,7 @@ void System::run()
                         uniqueChallenges[i].updateData(grade);
                     }
                 }
+                
             }
 
         }
@@ -532,7 +523,7 @@ void System::run()
             token = strtok(NULL, ".");
             strcpy(fileExt, token);
 
-            if (strcmp(fileExt, "txt") == 0) //users
+            if (strcmp(fileExt, "txt") == 0)
             {
                 file.open(fullFileName, std::ios::out);
 

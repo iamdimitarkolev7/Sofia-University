@@ -118,5 +118,12 @@ void User::addChallenge(const Challenge& challenge)
 
 void User::removeChallenge(const char* challengeName)
 {
+	if (!unfinished.contains(challengeName))
+	{
+		std::cout << "No such challenge for this user!" << std::endl;
+		return;
+	}
+
 	unfinished.remove(challengeName);
+	std::cout << "Successfully finished challenge! Good job!" << std::endl;
 }

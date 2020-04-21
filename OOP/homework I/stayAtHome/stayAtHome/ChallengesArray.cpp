@@ -41,22 +41,25 @@ void ChallengesArray::push(const Challenge& _challenge)
 
 void ChallengesArray::remove(const char* challengeName)
 {
-	assert(size - 1 >= 0);
+	if (size - 1 < 0)
+	{
+		return;
+	}
+
 	int newSize = size - 1, index = 0;
 
 	Challenge* smallerBuffer = new Challenge[newSize];
 
 	for (int i = 0; i < size; i++)
 	{
-		std::cout << "Name: " << challenges[i].getName() << std::endl;
-		if (strcmp(challengeName, challenges[i].getName()) != 0)
+		if (strcmp(challengeName, challenges[i].getName()) == 0)
 		{
-			smallerBuffer[index] = challenges[i];
-			index++;
+			continue;
 		}
 		else
 		{
-			continue;
+			smallerBuffer[index] = challenges[i];
+			index++;
 		}
 	}
 
