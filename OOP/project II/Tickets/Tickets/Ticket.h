@@ -12,6 +12,7 @@ protected:
 
 public:
 	Ticket();
+	Ticket(std::string eventName, std::string date, int row, int seat, std::string note);
 	Ticket(const Ticket& ticket);
 	Ticket& operator=(const Ticket& ticket);
 

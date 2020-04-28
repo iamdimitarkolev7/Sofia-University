@@ -3,15 +3,23 @@
 Event::Event()
 {
 	name = "";
-	hallName = "";
+	hallNumber = 0;
 	date = "";
+	buyings = 0;
+}
+
+Event::Event(std::string _date, int _hallNumber, std::string _name)
+{
+	name = _name;
+	hallNumber = _hallNumber;
+	date = _date;
 	buyings = 0;
 }
 
 Event::Event(const Event& other)
 {
 	name = other.name;
-	hallName = other.hallName;
+	hallNumber = other.hallNumber;
 	date = other.date;
 	buyings = other.buyings;
 }
@@ -21,7 +29,7 @@ Event& Event::operator=(const Event& other)
 	if (this != &other)
 	{
 		name = other.name;
-		hallName = other.hallName;
+		hallNumber = other.hallNumber;
 		date = other.date;
 		buyings = other.buyings;
 	}
@@ -39,9 +47,9 @@ std::string Event::getName() const
 	return name;
 }
 
-std::string Event::getHallName() const
+int Event::getHallNumber() const
 {
-	return hallName;
+	return hallNumber;
 }
 
 int Event::getBuyings() const

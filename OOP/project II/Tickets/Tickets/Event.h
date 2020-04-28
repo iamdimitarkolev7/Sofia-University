@@ -6,18 +6,19 @@ class Event
 {
 private:
 	std::string date;
-	std::string hallName;
+	int hallNumber;
 	std::string name;
 	int buyings;
 
 public:
 	Event();
+	Event(std::string _date, int _hallNumber, std::string _name);
 	Event(const Event& other);
 	Event& operator=(const Event& other);
 
 	std::string getDate() const;
 	std::string getName() const;
-	std::string getHallName() const;
+	int getHallNumber() const;
 	int getBuyings() const;
 };
 

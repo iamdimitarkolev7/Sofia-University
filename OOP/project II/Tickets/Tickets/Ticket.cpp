@@ -9,6 +9,15 @@ Ticket::Ticket()
 	note = "";
 }
 
+Ticket::Ticket(std::string _eventName, std::string _date, int _row, int _seat, std::string _note)
+{
+	eventName = _eventName;
+	date = _date;
+	row = _row;
+	seat = _seat;
+	note = _note;
+}
+
 Ticket::Ticket(const Ticket& other)
 {
 	eventName = other.eventName;

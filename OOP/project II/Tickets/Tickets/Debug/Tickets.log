@@ -1,7 +1,9 @@
-﻿  Event.cpp
-  Hall.cpp
-  Source.cpp
-  System.cpp
-  Ticket.cpp
-  Generating Code...
+﻿  System.cpp
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(99,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(113,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(124,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(159,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(189,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(192,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(258,22): warning C4018: '<': signed/unsigned mismatch
   Tickets.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Debug\Tickets.exe
