@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Hall.h"
+#include <fstream>
 
 class Event
 {
@@ -8,7 +8,7 @@ private:
 	std::string date;
 	int hallNumber;
 	std::string name;
-	int buyings;
+	int views;
 
 public:
 	Event();
@@ -19,6 +19,8 @@ public:
 	std::string getDate() const;
 	std::string getName() const;
 	int getHallNumber() const;
-	int getBuyings() const;
+	int getViews() const;
+	void incrementViews();
+	void decrementViews();
 };
 

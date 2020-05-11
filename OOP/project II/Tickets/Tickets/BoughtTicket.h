@@ -7,5 +7,6 @@ private:
 	int ID;
 
 public:
+	BoughtTicket(std::string eventName, std::string date, int row, int seat);
 	int getID();
 };

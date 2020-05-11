@@ -5,7 +5,7 @@ Event::Event()
 	name = "";
 	hallNumber = 0;
 	date = "";
-	buyings = 0;
+	views = 0;
 }
 
 Event::Event(std::string _date, int _hallNumber, std::string _name)
@@ -13,7 +13,7 @@ Event::Event(std::string _date, int _hallNumber, std::string _name)
 	name = _name;
 	hallNumber = _hallNumber;
 	date = _date;
-	buyings = 0;
+	views = 0;
 }
 
 Event::Event(const Event& other)
@@ -21,7 +21,7 @@ Event::Event(const Event& other)
 	name = other.name;
 	hallNumber = other.hallNumber;
 	date = other.date;
-	buyings = other.buyings;
+	views = other.views;
 }
 
 Event& Event::operator=(const Event& other)
@@ -31,7 +31,7 @@ Event& Event::operator=(const Event& other)
 		name = other.name;
 		hallNumber = other.hallNumber;
 		date = other.date;
-		buyings = other.buyings;
+		views = other.views;
 	}
 
 	return *this;
@@ -52,7 +52,17 @@ int Event::getHallNumber() const
 	return hallNumber;
 }
 
-int Event::getBuyings() const
+int Event::getViews() const
 {
-	return buyings;
+	return views;
+}
+
+void Event::incrementViews()
+{
+	views++;
+}
+
+void Event::decrementViews()
+{
+	views--;
 }

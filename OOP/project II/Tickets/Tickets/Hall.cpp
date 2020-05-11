@@ -82,6 +82,40 @@ bool Hall::isAvailable(int row, int seat)
 	return scheme[row - 1][seat - 1] == 0;
 }
 
+bool Hall::isBooked(int row, int seat)
+{
+	if (row > rows)
+	{
+		std::cout << "Invalid row in this hall!" << std::endl;
+		return false;
+	}
+
+	if (seat > places)
+	{
+		std::cout << "Invalid seat in this row of the hall!" << std::endl;
+		return false;
+	}
+
+	return scheme[row - 1][seat - 1] == 1;
+}
+
+bool Hall::isBought(int row, int seat)
+{
+	if (row > rows)
+	{
+		std::cout << "Invalid row in this hall!" << std::endl;
+		return false;
+	}
+
+	if (seat > places)
+	{
+		std::cout << "Invalid seat in this row of the hall!" << std::endl;
+		return false;
+	}
+
+	return scheme[row - 1][seat - 1] == 2;
+}
+
 int Hall::getFreePlaces()
 {
 	int result = 0;
@@ -149,4 +183,11 @@ int Hall::getBuyings()
 void Hall::removeBooking(int row, int seat)
 {
 	scheme[row - 1][seat - 1] = 0;
+}
+
+void Hall::serialize(std::fstream& file) const
+{
+	file.write((char*)&hallNumber, sizeof(hallNumber));
+	file.write((char*)&rows, sizeof(rows));
+	file.write((char*)&places, sizeof(places));
 }

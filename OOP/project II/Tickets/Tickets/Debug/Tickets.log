@@ -1,9 +1,40 @@
 ﻿  System.cpp
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(99,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(113,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(124,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(159,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(189,29): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(192,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(258,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(93,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(107,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(118,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(131,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(165,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(188,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(210,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(217,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(233,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(256,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(278,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(290,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(313,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(335,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(349,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(368,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(372,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(397,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(405,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(426,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(434,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(456,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(464,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(505,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(507,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(533,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(537,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(553,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(555,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(571,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(584,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(587,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(646,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(658,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(688,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(706,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(843,22): warning C4018: '<': signed/unsigned mismatch
   Tickets.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Debug\Tickets.exe
