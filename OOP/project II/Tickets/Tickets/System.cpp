@@ -598,34 +598,74 @@ void System::open(std::string path)
 		return;
 	}
 
-	file.open(path, std::ios::out | std::ios::binary);
-	file.close();
-	file.open(path, std::ios::in | std::ios::out | std::ios::binary);
+	std::ifstream in(path);
 
-	if (!file.is_open())
+	if (!in.is_open())
 	{
-		std::cout << "Error!" << std::endl;
-		return;
+		file.open(path, std::ios::out | std::ios::binary);
+		file.close();
+		file.open(path, std::ios::in | std::ios::out | std::ios::binary);
 	}
+	else
+	{
+		if (!in.is_open())
+		{
+			std::cout << "Error!" << std::endl;
+			return;
+		}
+		if (in.peek() == std::ifstream::traits_type::eof())
+		{
+			file.open(path, std::ios::out, std::ios::binary);
+			file.close();
+			file.open(path, std::ios::in | std::ios::out | std::ios::binary);
 
+			if (!file.is_open())
+			{
+				std::cout << "Error!" << std::endl;
+				return;
+			}
+
+			std::vector<std::string> tokens = split(path, "\\");
+			fileName = tokens[tokens.size() - 1];
+			std::cout << "Successfully opened " << fileName << std::endl;
+
+			return;
+		}
+
+		std::string date, name;
+		int hallNumber, views, counter = 0;
+
+		while (!in.eof())
+		{
+			int len;
+			in.read((char*)&len, sizeof(len));
+			date.resize(len);
+			in.read((char*)&date[0], len);
+
+			in.read((char*)&hallNumber, sizeof(hallNumber));
+
+			in.read((char*)&len, sizeof(len));
+			name.resize(len);
+			in.read((char*)&name[0], len);
+
+			Event evnt(date, hallNumber, name);
+			events.push_back(evnt);
+		}
+
+		in.close();
+		file.open(path, std::ios::out, std::ios::binary);
+		file.close();
+		file.open(path, std::ios::in | std::ios::out | std::ios::binary);
+
+		if (!file.is_open())
+		{
+			std::cout << "Error!" << std::endl;
+			return;
+		}
+	}
+	
 	std::vector<std::string> tokens = split(path, "\\");
 	fileName = tokens[tokens.size() - 1];
-	filePath = path;
-
-	std::string date, name;
-	int hallNumber, views;
-	Event e;
-
-	while (!file.eof())
-	{
-		file.read((char*)&date, sizeof(date));
-		file.read((char*)&hallNumber, sizeof(hallNumber));
-		file.read((char*)&name, sizeof(name));
-		file.read((char*)&views, sizeof(views));
-
-		Event evnt(date, hallNumber, name);
-		events.push_back(evnt);
-	}
 
 	std::cout << "Successfully opened " << fileName << std::endl;
 }
@@ -645,7 +685,16 @@ void System::save()
 
 	for (int i = 0; i < events.size(); i++)
 	{
-		file.write((char*)&events[i], sizeof(events[i]));
+		int len = events[i].getDate().length();
+		file.write((char*)&len, sizeof(len));
+		file.write((char*)&events[i].getDate()[0], len);
+
+		int hallNumber = events[i].getHallNumber();
+		file.write((char*)&hallNumber, sizeof(hallNumber));
+
+		len = events[i].getName().length();
+		file.write((char*)&len, sizeof(len));
+		file.write((char*)&events[i].getName()[0], len);
 	}
 
 	std::cout << "Successfully saved in " << fileName << " file" << std::endl;
@@ -657,10 +706,19 @@ void System::saveas(std::string path)
 	{
 		for (int i = 0; i < events.size(); i++)
 		{
-			file.write((char*)&events[i], sizeof(events[i]));
+			int len = events[i].getDate().length();
+			file.write((char*)&len, sizeof(len));
+			file.write((char*)&events[i].getDate()[0], len);
+
+			int hallNumber = events[i].getHallNumber();
+			file.write((char*)&hallNumber, sizeof(hallNumber));
+
+			len = events[i].getName().length();
+			file.write((char*)&len, sizeof(len));
+			file.write((char*)&events[i].getName()[0], len);
 		}
 
-		std::cout << "Successfully saved in " << fileName << " file" << std::endl;
+		std::cout << "Successfully saved in " << path << " file" << std::endl;
 	}
 	else
 	{
@@ -687,10 +745,19 @@ void System::saveas(std::string path)
 				{
 					for (int i = 0; i < events.size(); i++)
 					{
-						file.write((char*)&events[i], sizeof(events[i]));
+						int len = events[i].getDate().length();
+						file.write((char*)&len, sizeof(len));
+						file.write((char*)&events[i].getDate()[0], len);
+
+						int hallNumber = events[i].getHallNumber();
+						file.write((char*)&hallNumber, sizeof(hallNumber));
+
+						len = events[i].getName().length();
+						file.write((char*)&len, sizeof(len));
+						file.write((char*)&events[i].getName()[0], len);
 					}
 
-					std::cout << "Successfully saved in " << fileName << " file" << std::endl;
+					std::cout << "Successfully saved in " << path << " file" << std::endl;
 
 					newstream.close();
 				}
@@ -705,10 +772,19 @@ void System::saveas(std::string path)
 
 			for (int i = 0; i < events.size(); i++)
 			{
-				newstream.write((char*)&events[i], sizeof(events[i]));
+				int len = events[i].getDate().length();
+				file.write((char*)&len, sizeof(len));
+				file.write((char*)&events[i].getDate()[0], len);
+				
+				int hallNumber = events[i].getHallNumber();
+				file.write((char*)&hallNumber, sizeof(hallNumber));
+
+				len = events[i].getName().length();
+				file.write((char*)&len, sizeof(len));
+				file.write((char*)&events[i].getName()[0], len);
 			}
 
-			std::cout << "Successfully saved in " << fileName << " file" << std::endl;
+			std::cout << "Successfully saved in " << path << " file" << std::endl;
 
 			newstream.close();
 		}
@@ -759,15 +835,7 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 3)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			std::string date = tokens[0], eventName = tokens[2];
-
 			int hallNumber = stringToInt(tokens[1]);
 
 			if (!isDateValid(date))
@@ -790,7 +858,7 @@ void System::run()
 
 			if (!isHallFree(date, hallNumber))
 			{
-				std::cout << "There\'s already an event on this date at this hall!" << std::endl;
+				std::cout << "There is already an event on this date at this hall!" << std::endl;
 				continue;
 			}
 
@@ -799,8 +867,15 @@ void System::run()
 
 			if (file.is_open())
 			{
-				std::cout << "Added to file!" << std::endl;
-				file.write((char*)&evnt, sizeof(evnt));
+				int len = date.length();
+				file.write((char*)&len, sizeof(len));
+				file.write((char*)&date[0], len);
+
+				file.write((char*)&hallNumber, sizeof(hallNumber));
+
+				len = eventName.length();
+				file.write((char*)&len, sizeof(len));
+				file.write((char*)&eventName[0], len);
 			}
 
 			std::cout << "Event successfully added!" << std::endl;
@@ -809,13 +884,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 2)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			std::string date = tokens[0], eventName = tokens[1];
 
 			freeSeatsData(date, eventName);
@@ -824,12 +892,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 5)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
 
 			int bookedRow = stringToInt(tokens[0]), bookedSeat = stringToInt(tokens[1]);
 			std::string date = tokens[2], eventName = tokens[3], note;
@@ -851,13 +913,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 4)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			int bookedRow = stringToInt(tokens[0]), bookedSeat = stringToInt(tokens[1]);
 			std::string date = tokens[2], eventName = tokens[3];
 
@@ -867,13 +922,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 4)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			int row = stringToInt(tokens[0]), seat = stringToInt(tokens[1]);
 			std::string date = tokens[2], eventName = tokens[3];
 
@@ -889,12 +937,6 @@ void System::run()
 
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() < 1 || tokens.size() > 2)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
 			
 			if (tokens.size() == 1)
 				showBookings(tokens[0]);
@@ -905,13 +947,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() != 1)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			int code = stringToInt(tokens[0]);
 
 			checkTicketInformation(code);
@@ -920,13 +955,6 @@ void System::run()
 		{
 			input.erase(0, input.find(" ") + 1);
 			std::vector<std::string> tokens = split(input, " ");
-
-			if (tokens.size() > 3)
-			{
-				std::cout << "Invalid input! Type \'help\' for help!" << std::endl;
-				continue;
-			}
-
 			std::string from = tokens[0], to = tokens[1];
 
 			if (tokens.size() == 3)

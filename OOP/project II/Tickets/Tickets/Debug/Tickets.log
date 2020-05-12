@@ -32,9 +32,10 @@ C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cp
 C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(571,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(584,29): warning C4018: '<': signed/unsigned mismatch
 C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(587,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(646,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(658,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(688,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(706,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(843,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(636,19): warning C4101: 'views': unreferenced local variable
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(686,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(707,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(746,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(773,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Tickets\System.cpp(905,22): warning C4018: '<': signed/unsigned mismatch
   Tickets.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\project II\Tickets\Debug\Tickets.exe
