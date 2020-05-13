@@ -46,6 +46,7 @@ private:
 	void report(std::string from, std::string to);
 	bool isDateInRange(std::string from, std::string to, std::string date);
 	void showMostViewedEvents();
+	void showLeastViewedEvents();
 	void eventsSort();
 
 	void open(std::string path);

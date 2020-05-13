@@ -52,6 +52,18 @@ bool System::isDateValid(std::string date)
 	int month = stringToInt(tokens[1]);
 	int day = stringToInt(tokens[2]);
 
+	if (day >= 1 && day <= 9)
+	{
+		if (tokens[2][0] != '0')
+			return false;
+	}
+
+	if (month >= 1 && month <= 9)
+	{
+		if (tokens[1][0] != '0')
+			return false;
+	}
+
 	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
 	{
 		if (day > 31)
@@ -69,16 +81,12 @@ bool System::isDateValid(std::string date)
 		if (year % 4 == 0)
 		{
 			if (day > 29)
-			{
 				return false;
-			}
 		}
 		else
 		{
 			if (day > 28)
-			{
 				return false;
-			}
 		}
 	}
 
@@ -381,43 +389,7 @@ void System::showBookings()
 
 void System::showBookings(std::string inputData)
 {
-	bool isDate = isDateValid(inputData);
 	bool isName = isNameValid(inputData);
-
-	if (!isDate && !isName)
-	{
-		std::cout << "Invalid parameter!" << std::endl;
-		return;
-	}
-
-	if (isDate)
-	{
-		bool doneWork = false;
-
-		for (int i = 0; i < events.size(); i++)
-		{
-			if (events[i].getDate() == inputData)
-			{
-				doneWork = true;
-
-				std::cout << "Bookings for " << events[i].getName() << " on " << events[i].getDate() << ": ";
-
-				for (int j = 0; j < eventHalls.size(); j++)
-				{
-					if (events[i].getHallNumber() == eventHalls[j].getHallNumber())
-					{
-						std::cout << eventHalls[j].getBookings() << std::endl;
-					}
-				}
-			}
-		}
-
-		if (!doneWork)
-		{
-			std::cout << "There are no events on this date!" << std::endl;
-			return;
-		}
-	}
 
 	if (isName)
 	{
@@ -444,6 +416,37 @@ void System::showBookings(std::string inputData)
 		if (!doneWork)
 		{
 			std::cout << "There is no such event in event list!" << std::endl;
+			return;
+		}
+	}
+
+	bool isDate = isDateValid(inputData);
+
+	if (isDate)
+	{
+		bool doneWork = false;
+
+		for (int i = 0; i < events.size(); i++)
+		{
+			if (events[i].getDate() == inputData)
+			{
+				doneWork = true;
+
+				std::cout << "Bookings for " << events[i].getName() << " on " << events[i].getDate() << ": ";
+
+				for (int j = 0; j < eventHalls.size(); j++)
+				{
+					if (events[i].getHallNumber() == eventHalls[j].getHallNumber())
+					{
+						std::cout << eventHalls[j].getBookings() << std::endl;
+					}
+				}
+			}
+		}
+
+		if (!doneWork)
+		{
+			std::cout << "There are no events on this date!" << std::endl;
 			return;
 		}
 	}
@@ -572,6 +575,35 @@ void System::showMostViewedEvents()
 	{
 		std::cout << "\t"<< i + 1 << ". " << events[i].getName() << ": " << events[i].getViews() << " views." << std::endl;
 	}
+}
+
+void System::showLeastViewedEvents()
+{
+	int counter = 0;
+	bool showEvent;
+
+	for (int i = 0; i < events.size(); i++)
+	{
+		showEvent = false;
+
+		for (int j = 0; j < eventHalls.size(); j++)
+		{
+			if (events[i].getHallNumber() == eventHalls[j].getHallNumber())
+			{
+				if (eventHalls[j].getFreePlaces() > eventHalls[j].capacity() * 0.1)
+					showEvent = true;
+			}
+		}
+
+		if (showEvent)
+		{
+			std::cout << events[i].getName() << std::endl;
+			counter++;
+		}
+	}
+
+	if (counter == 0)
+		std::cout << "No data!" << std::endl;
 }
 
 int System::stringToInt(std::string str)
@@ -794,12 +826,22 @@ void System::saveas(std::string path)
 void System::help()
 {
 	std::cout << "The following commands are supported :" << std::endl;
-	std::cout << "open <file>    opens <file>" << std::endl;
-	std::cout << "close          closes currently opened file" << std::endl;
-	std::cout << "save           saves the currently open file" << std::endl;
-	std::cout << "saveas <file>  saves the currently open file in <file>" << std::endl;
-	std::cout << "help           prints this information" << std::endl;
-	std::cout << "exit           exists the program" << std::endl;
+	std::cout << "addevent <date> <hall> <name>           adds event to event list" << std::endl;
+	std::cout << "freeseats <date> <name>                 checks free seats" << std::endl;
+	std::cout << "book <row> <seat> <date> <name> <note>  books a ticket" << std::endl;
+	std::cout << "unbook <row> <seat> <date> <name>       unbooks a ticket" << std::endl;
+	std::cout << "buy <row> <seat> <date> <name>          buys a ticket" << std::endl;
+	std::cout << "bookings [<date>] [<name>]              shows bookings" << std::endl;
+	std::cout << "check <code>                            checks a ticket" << std::endl;
+	std::cout << "report <from> <to> [<hall>]             checks events" << std::endl;
+	std::cout << "most_viewed                             shows most viewed events" << std::endl;
+	std::cout << "least_viewed                            shows least viewed events" << std::endl;
+	std::cout << "open <file>                             opens <file>" << std::endl;
+	std::cout << "close                                   closes currently opened file" << std::endl;
+	std::cout << "save                                    saves the currently open file" << std::endl;
+	std::cout << "saveas <file>                           saves the currently open file in <file>" << std::endl;
+	std::cout << "help                                    prints this information" << std::endl;
+	std::cout << "exit                                    exists the program" << std::endl;
 }
 
 void System::closeFile()
@@ -840,7 +882,7 @@ void System::run()
 
 			if (!isDateValid(date))
 			{
-				std::cout << "Invalid date!" << std::endl;
+				std::cout << "Invalid date! Date must be in YYYY-MM-DD format!" << std::endl;
 				continue;
 			}
 
@@ -898,7 +940,7 @@ void System::run()
 
 			if (!isDateValid(date))
 			{
-				std::cout << "Invalid date!" << std::endl;
+				std::cout << "Invalid date! Date must be in YYYY-MM-DD format!" << std::endl;
 				continue;
 			}
 
@@ -966,9 +1008,13 @@ void System::run()
 
 			report(from, to);
 		}
-		else if (operation == "statistics")
+		else if (operation == "most_viewed")
 		{
 			showMostViewedEvents();
+		}
+		else if (operation == "least_viewed")
+		{
+		showLeastViewedEvents();
 		}
 		else if (operation == "open")
 		{
