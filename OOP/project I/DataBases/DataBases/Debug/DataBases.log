@@ -1,2 +1,12 @@
-﻿  System.cpp
+﻿  Table.cpp
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(15,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(18,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(32,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(47,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(63,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(67,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(82,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(84,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(97,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\Table.cpp(78): warning C4715: 'Table::isValid': not all control paths return a value
   DataBases.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\Debug\DataBases.exe
