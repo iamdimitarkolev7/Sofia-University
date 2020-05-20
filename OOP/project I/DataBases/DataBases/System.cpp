@@ -62,7 +62,6 @@ void System::import(std::string fileName)
 
 	in >> tableName;
 	in.ignore();
-	in.get(); // reads '\n' after tableName
 	std::vector<std::vector<Cell>> table = createTable(rows, columns, in);
 	in.close();
 
@@ -96,15 +95,7 @@ void System::showTables()
 
 void System::describeTable(std::string name)
 {
-	bool isNameValid = false;
-
-	for (int i = 0; i < loadedTables.size(); i++)
-	{
-		if (loadedTables[i] == name)
-			isNameValid = true;
-	}
-
-	if (!isNameValid)
+	if (!isNameValid(name))
 	{
 		std::cout << "No such loaded table!" << std::endl;
 		return;
@@ -117,17 +108,9 @@ void System::describeTable(std::string name)
 	}
 }
 
-void System::print(std::string tableName)
+void System::printTable(std::string tableName)
 {
-	bool isNameValid = false;
-
-	for (int i = 0; i < loadedTables.size(); i++)
-	{
-		if (loadedTables[i] == tableName)
-			isNameValid = true;
-	}
-
-	if (!isNameValid)
+	if (!isNameValid(tableName))
 	{
 		std::cout << "No such loaded table!" << std::endl;
 		return;
@@ -138,6 +121,90 @@ void System::print(std::string tableName)
 		if (dataBase[i].getName() == tableName)
 			dataBase[i].print();
 	}
+}
+
+void System::exportTable(std::string tableName, std::string destFileName)
+{
+	std::fstream out(destFileName, std::ios::out | std::ios::trunc);
+
+	if (!out.is_open())
+	{
+		std::cout << "Cannot open/create this file!" << std::endl;
+		return;
+	}
+
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (dataBase[i].getName() == tableName)
+		{
+			out << dataBase[i].getName() << std::endl;
+
+			std::string line;
+
+			for (int p = 0; p < dataBase[i].getTable().size(); p++)
+			{
+				line = "";
+
+				for (int k = 0; k < dataBase[i].getTable()[p].size() - 1; k++)
+				{
+					line += dataBase[i].getTable()[p][k].getData() + " ";
+				}
+
+				line += dataBase[i].getTable()[p][dataBase[i].getTable()[p].size() - 1].getData();
+				out << line << std::endl;
+			}
+		}
+	}
+
+	out.close();
+	std::cout << "Table successfully exported to " << destFileName << std::endl;
+}
+
+void System::addColumn(std::string tableName, int pos, std::string type)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+	
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (dataBase[i].getName() == tableName)
+		{
+			if (pos < 0 || pos > dataBase[i].getCols() + 1)
+			{
+				std::cout << "Invalid column position!" << std::endl;
+				return;
+			}
+
+			if (type != "integer" && type != "double" && type != "string" && type != "null")
+			{
+				std::cout << "Invalid type! Supported cell types are: integer, double, string and null" << std::endl;
+				return;
+			}
+
+			Cell cell("NULL", type);
+			dataBase[i].addCol(pos, cell);
+		}
+	}
+}
+
+bool System::isNameValid(std::string name)
+{
+	for (int i = 0; i < loadedTables.size(); i++)
+	{
+		if (loadedTables[i] == name)
+			return true;
+	}
+
+	return false;
 }
 
 void System::checkRowsCols(int& rows, int& cols, std::fstream& in)
@@ -229,6 +296,22 @@ std::vector<std::vector<Cell>> System::createTable(int& rows, int& cols, std::fs
 	return result;
 }
 
+int System::stringToInt(std::string str)
+{
+	int startIndex = 0, result = 0;
+
+	if (str[0] == '0')
+		startIndex = 1;
+
+	for (int i = startIndex; i < str.size(); i++)
+	{
+		int digit = str[i] - '0';
+		result += digit * pow(10, str.size() - 1 - i);
+	}
+
+	return result;
+}
+
 void System::run()
 {
 	std::string input;
@@ -260,11 +343,19 @@ void System::run()
 		}
 		else if (operation == "print")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string name = tokens[0];
 
+			printTable(name);
 		}
 		else if (operation == "export")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0], destFileName = tokens[1];
 
+			exportTable(tableName, destFileName);
 		}
 		else if (operation == "select")
 		{
@@ -272,7 +363,12 @@ void System::run()
 		}
 		else if (operation == "addcolumn")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0], columnType = tokens[2];
+			int columnPos = stringToInt(tokens[1]);
 
+			addColumn(tableName, columnPos, columnType);
 		}
 		else if (operation == "update")
 		{

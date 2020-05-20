@@ -1,10 +1,11 @@
 #include <iostream>
+#include <vector>
 #include "Table.h"
+#include "Cell.h"
 
 Table::Table()
 {
 	name = "";
-	destFileName = "";
 }
 
 Table::Table(std::vector<std::vector<Cell>> _table, std::string _name)
@@ -25,7 +26,6 @@ Table::Table(std::vector<std::vector<Cell>> _table, std::string _name)
 Table::Table(const Table& other)
 {
 	name = other.name;
-	destFileName = other.destFileName;
 
 	table.clear();
 
@@ -40,7 +40,6 @@ Table& Table::operator=(const Table& other)
 	if (this != &other)
 	{
 		name = other.name;
-		destFileName = other.destFileName;
 
 		table.clear();
 
@@ -56,6 +55,11 @@ Table& Table::operator=(const Table& other)
 std::string Table::getName()
 {
 	return name;
+}
+
+std::vector<std::vector<Cell>> Table::getTable()
+{
+	return table;
 }
 
 bool Table::isValid()
@@ -92,11 +96,29 @@ void Table::print()
 
 void Table::showInformation()
 {
-	std::cout << "There are " << table.size() << " columns" << std::endl;
+	std::cout << "There are " << table[0].size() << " columns in the selected table: " << std::endl;
 
 	for (int i = 0; i < table[0].size(); i++)
 	{
-		std::cout << "#" << (i + 1) << " column type: " << table[0][i].getType() << std::endl;
+		std::cout << "\t#" << (i + 1) << " column type: " << table[0][i].getType() << std::endl;
+	}
+}
+
+int Table::getRows()
+{
+	return table.size();
+}
+
+int Table::getCols()
+{
+	return table[0].size();
+}
+
+void Table::addCol(int pos, const Cell& cell)
+{
+	for (auto& row : table) 
+	{
+		row.insert(row.begin() + pos, cell);
 	}
 }
 
