@@ -43,6 +43,15 @@ std::vector<std::string> System::split(std::string str, std::string delimiter)
 	return tokens;
 }
 
+//Sample Table from file:
+/*
+TableName
+123 123.02 "Hello Dimitar" 15.5
+15 -66.3 "Zdr Mitko" NULL
+123 +5.04 "kolev" NULL
+NULL -2.5 NULL NULL
+NULL NULL NULL NULL
+*/
 void System::import(std::string fileName)
 {
 	std::fstream in(fileName);

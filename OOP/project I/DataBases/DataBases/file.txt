@@ -1,0 +1,6 @@
+TableName
+123 123.02 "Hello Dimitar" 15.5
+15 -66.3 "Zdr Mitko mitkov" NULL
+123 +5.04 "kolev" NULL
+NULL -2.5 NULL NULL
+NULL NULL NULL NULL
