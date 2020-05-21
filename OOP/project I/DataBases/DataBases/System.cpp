@@ -7,7 +7,6 @@
 #include "Cell.h"
 
 std::vector<Table> dataBase;
-std::vector<std::string> loadedTables;
 
 System& System::i()
 {
@@ -22,7 +21,7 @@ System::System()
 
 System::~System()
 {
-	std::cout << "End of the program!" << std::endl;
+	std::cout << "Exiting program..." << std::endl;
 }
 
 std::vector<std::string> System::split(std::string str, std::string delimiter)
@@ -73,23 +72,28 @@ void System::import(std::string fileName)
 		return;
 	}
 
+	if (isNameValid(tableName))
+	{
+		std::cout << "There is already a table with such name!" << std::endl;
+		return;
+	}
+
 	dataBase.push_back(tableToAdd);
-	loadedTables.push_back(tableToAdd.getName());
 
 	std::cout << "Successfully imported table!" << std::endl;
 }
 
 void System::showTables()
 {
-	if (loadedTables.size() == 0)
+	if (dataBase.size() == 0)
 	{
 		std::cout << "No loaded tables!" << std::endl;
 		return;
 	}
 	
-	for (int i = 0; i < loadedTables.size(); i++)
+	for (int i = 0; i < dataBase.size(); i++)
 	{
-		std::cout << (i + 1) << ". " << loadedTables[i] << std::endl;
+		std::cout << (i + 1) << ". " << dataBase[i].getName() << std::endl;
 	}
 }
 
@@ -194,13 +198,281 @@ void System::addColumn(std::string tableName, int pos, std::string type)
 			dataBase[i].addCol(pos, cell);
 		}
 	}
+
+	std::cout << "Successfully added column!" << std::endl;
+}
+
+void System::rename(std::string oldName, std::string newName)
+{
+	if (!isNameValid(oldName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	if (isNameValid(newName))
+	{
+		std::cout << "The new name of the table must be unique!" << std::endl;
+		return;
+	}
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (dataBase[i].getName() == oldName)
+			dataBase[i].changeName(newName);
+	}
+
+	std::cout << "Successfully changed " << oldName << " to " << newName << std::endl;
+}
+
+void System::countRows(std::string tableName, int searchColumn, std::string searchValue)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (tableName == dataBase[i].getName())
+		{
+			if (searchColumn < 1 || searchColumn > dataBase[i].getCols())
+			{
+				std::cout << "Invalid column!" << std::endl;
+				return;
+			}
+			
+			for (int p = 0; p < dataBase[i].getRows(); p++)
+			{
+				for (int k = 0; k < dataBase[i].getCols(); k++)
+				{
+					if (k == (searchColumn - 1))
+					{
+						if (dataBase[i].getTable()[p][k].getData() == searchValue)
+						{
+							std::cout << "Number of columns: " << dataBase[i].getCols() << std::endl;
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	std::cout << "No such value in the selected column!" << std::endl;
+}
+
+void System::update(std::string tableName, int searchColumn, std::string searchValue, int targetColumn, std::string targetValue)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	bool doneWork = false;
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (tableName == dataBase[i].getName())
+		{
+			if (searchColumn < 1 || searchColumn > dataBase[i].getCols() 
+				|| targetColumn < 1 || targetColumn > dataBase[i].getCols())
+			{
+				std::cout << "Invalid column!" << std::endl;
+				return;
+			}
+
+			for (int p = 0; p < dataBase[i].getRows(); p++)
+			{
+				for (int k = 0; k < dataBase[i].getCols(); k++)
+				{
+					if (k == (searchColumn - 1))
+					{
+						if (dataBase[i].getTable()[p][k].getData() == searchValue)
+						{
+							for (int m = 0; m < dataBase[i].getRows(); m++)
+							{
+								for (int n = 0; n < dataBase[i].getCols(); n++)
+								{
+									if (n == (targetColumn - 1))
+									{
+										Cell cell(targetValue);
+
+										if (dataBase[i].getTable()[m][n].getType() != cell.getType())
+										{
+											if (dataBase[i].getTable()[m][n].getType() != "null")
+											{
+												std::cout << "You cannot change cell\'s data from one type to another!"
+													<< std::endl;
+												return;
+											}
+										}
+
+
+										dataBase[i].updateCell(m, n, targetValue);
+										doneWork = true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (doneWork)
+	{
+		std::cout << "Successfully updated data!" << std::endl;
+	}
+	else
+	{
+		std::cout << "Search value does not exist in the searched column or is not correct!" << std::endl;
+	}
+}
+
+void System::deleteCell(std::string tableName, int searchColumn, std::string searchValue)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	bool doneWork = false;
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (tableName == dataBase[i].getName())
+		{
+			if (searchColumn < 1 || searchColumn > dataBase[i].getCols())
+			{
+				std::cout << "Invalid column!" << std::endl;
+				return;
+			}
+
+			for (int p = 0; p < dataBase[i].getRows(); p++)
+			{
+				for (int k = 0; k < dataBase[i].getCols(); k++)
+				{
+					if (k == (searchColumn - 1))
+					{
+						if (dataBase[i].getTable()[p][k].getData() == searchValue)
+						{
+							dataBase[i].deleteCell(p, k);
+							doneWork = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (doneWork)
+	{
+		std::cout << "Successfully deleted cell!" << std::endl;
+	}
+	else
+	{
+		std::cout << "Search value does not exist in the searched column or is not correct!" << std::endl;
+	}
+}
+
+void System::selectRows(std::string tableName, int searchColumn, std::string searchValue)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	bool doneWork = false;
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (dataBase[i].getName() == tableName)
+		{
+			if (searchColumn < 1 || searchColumn > dataBase[i].getCols())
+			{
+				std::cout << "Invalid column!" << std::endl;
+				return;
+			}
+
+			for (int p = 0; p < dataBase[i].getRows(); p++)
+			{
+				for (int k = 0; k < dataBase[i].getCols(); k++)
+				{
+					if (k == (searchColumn - 1))
+					{
+						if (dataBase[i].getTable()[p][k].getData() == searchValue)
+						{
+							dataBase[i].printRow(p);
+							std::cout << std::endl;
+							doneWork = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (!doneWork)
+	{
+		std::cout << "Search value does not exist in the searched column or is not correct!" << std::endl;
+	}
+}
+
+void System::insertRow(std::string tableName, std::vector<std::string> data)
+{
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+
+	Table newTable;
+
+	for (int i = 0; i < dataBase.size(); i++)
+	{
+		if (dataBase[i].getName() == tableName)
+		{
+			newTable = dataBase[i];
+		}
+	}
+
+	if (data.size() > newTable.getCols())
+	{
+		std::cout << "Too many parameters for " << newTable.getName() << " table!" << std::endl;
+		return;
+	}
+
+	newTable.pushRow(data);
+
+	if (newTable.isValid())
+	{
+		for (int i = 0; i < dataBase.size(); i++)
+		{
+			if (dataBase[i].getName() == tableName)
+			{
+				dataBase[i] = newTable;
+			}
+		}
+
+		std::cout << "Successfully added row!" << std::endl;
+	}
+	else
+	{
+		std::cout << "The row is not valid for the selected table!" << std::endl;
+	}
 }
 
 bool System::isNameValid(std::string name)
 {
-	for (int i = 0; i < loadedTables.size(); i++)
+	for (int i = 0; i < dataBase.size(); i++)
 	{
-		if (loadedTables[i] == name)
+		if (dataBase[i].getName() == name)
 			return true;
 	}
 
@@ -359,7 +631,12 @@ void System::run()
 		}
 		else if (operation == "select")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[2], searchValue = tokens[1];
+			int searchColumn = stringToInt(tokens[0]);
 
+			selectRows(tableName, searchColumn, searchValue);
 		}
 		else if (operation == "addcolumn")
 		{
@@ -372,15 +649,35 @@ void System::run()
 		}
 		else if (operation == "update")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0], searchValue = tokens[2], targetValue = tokens[4];
+			int searchColumn = stringToInt(tokens[1]), targetColumn = stringToInt(tokens[3]);
 
+			update(tableName, searchColumn, searchValue, targetColumn, targetValue);
 		}
 		else if (operation == "delete")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0], searchValue = tokens[2];
+			int searchColumn = stringToInt(tokens[1]);
 
+			deleteCell(tableName, searchColumn, searchValue);
 		}
 		else if (operation == "insert")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0];
+			std::vector<std::string> data;
 
+			for (int i = 1; i < tokens.size(); i++)
+			{
+				data.push_back(tokens[i]);
+			}
+
+			insertRow(tableName, data);
 		}
 		else if (operation == "innerjoin")
 		{
@@ -388,11 +685,20 @@ void System::run()
 		}
 		else if (operation == "rename")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string oldName = tokens[0], newName = tokens[1];
 
+			rename(oldName, newName);
 		}
 		else if (operation == "count")
 		{
+			input.erase(0, input.find(" ") + 1);
+			std::vector<std::string> tokens = split(input, " ");
+			std::string tableName = tokens[0], searchValue = tokens[2];
+			int searchColumn = stringToInt(tokens[1]);
 
+			countRows(tableName, searchColumn, searchValue);
 		}
 		else if (operation == "aggregate")
 		{
@@ -416,7 +722,7 @@ void System::run()
 		}
 		else if (operation == "exit")
 		{
-
+			break;
 		}
 		else
 		{

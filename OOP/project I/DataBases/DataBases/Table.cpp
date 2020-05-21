@@ -122,6 +122,59 @@ void Table::addCol(int pos, const Cell& cell)
 	}
 }
 
+void Table::changeName(std::string newName)
+{
+	name = newName;
+}
+
+void Table::updateCell(int row, int col, std::string value)
+{
+	table[row][col] = value;
+}
+
+void Table::deleteCell(int row, int col)
+{
+	Cell cell("NULL");
+
+	table[row][col] = cell;
+}
+
+void Table::printRow(int row)
+{
+	for (int i = 0; i < table.size(); i++)
+	{
+		for (int j = 0; j < table[i].size(); j++)
+		{
+			if (row == i)
+			{
+				std::cout << table[i][j].getData() << " ";
+			}
+		}
+	}
+}
+
+void Table::pushRow(std::vector<std::string> rowData)
+{
+	std::vector<Cell> rowToAdd;
+
+	for (int i = 0; i < rowData.size(); i++)
+	{
+		Cell cell(rowData[i]);
+		rowToAdd.push_back(cell);
+	}
+
+	if (rowData.size() < getCols())
+	{
+		for (int i = 0; i < getCols() - rowData.size(); i++)
+		{
+			Cell cell("NULL");
+			rowToAdd.push_back(cell);
+		}
+	}
+
+	table.push_back(rowToAdd);
+}
+
 Table::~Table()
 {
 
