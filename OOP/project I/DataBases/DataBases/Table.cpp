@@ -132,11 +132,9 @@ void Table::updateCell(int row, int col, std::string value)
 	table[row][col] = value;
 }
 
-void Table::deleteCell(int row, int col)
+void Table::deleteRow(int row)
 {
-	Cell cell("NULL");
-
-	table[row][col] = cell;
+	table.erase(table.begin() + row);
 }
 
 void Table::printRow(int row)
@@ -173,6 +171,98 @@ void Table::pushRow(std::vector<std::string> rowData)
 	}
 
 	table.push_back(rowToAdd);
+}
+
+double Table::sumColumn(int col)
+{
+	double result = 0;
+
+	for (int i = 0; i < table.size(); i++)
+	{
+		for (int j = 0; j < table[i].size(); j++)
+		{
+			if (col == j)
+			{
+				if (table[i][j].getType() == "integer")
+					result += std::stoi(table[i][j].getData());
+				else if (table[i][j].getType() == "double")
+					result += std::stod(table[i][j].getData());
+				else if (table[i][j].getType() == "null")
+					continue;
+			}
+		}
+	}
+
+	return result;
+}
+
+double Table::minElementColumn(int col)
+{
+	double min = 100000;
+
+	for (int i = 0; i < table.size(); i++)
+	{
+		for (int j = 0; j < table[i].size(); j++)
+		{
+			if (col == j)
+			{
+				if (table[i][j].getType() == "integer")
+					min = (min > std::stoi(table[i][j].getData())) ? std::stoi(table[i][j].getData()) : min;
+				else if (table[i][j].getType() == "double")
+					min = (min > std::stod(table[i][j].getData())) ? std::stoi(table[i][j].getData()) : min;
+				else if (table[i][j].getType() == "null")
+					continue;
+			}
+		}
+	}
+
+	return min;
+}
+
+double Table::maxElementColumn(int col)
+{
+	double max = -100000;
+
+	for (int i = 0; i < table.size(); i++)
+	{
+		for (int j = 0; j < table[i].size(); j++)
+		{
+			if (col == j)
+			{
+				if (table[i][j].getType() == "integer")
+					max = (max < std::stoi(table[i][j].getData())) ? std::stoi(table[i][j].getData()) : max;
+				else if (table[i][j].getType() == "double")
+					max = (max > std::stod(table[i][j].getData())) ? std::stoi(table[i][j].getData()) : max;
+				else if (table[i][j].getType() == "null")
+					continue;
+			}
+		}
+	}
+
+	return max;
+}
+
+double Table::productColumn(int col)
+{
+	double result = 1;
+
+	for (int i = 0; i < table.size(); i++)
+	{
+		for (int j = 0; j < table[i].size(); j++)
+		{
+			if (col == j)
+			{
+				if (table[i][j].getType() == "integer")
+					result *= std::stoi(table[i][j].getData());
+				else if (table[i][j].getType() == "double")
+					result *= std::stod(table[i][j].getData());
+				else if (table[i][j].getType() == "null")
+					continue;
+			}
+		}
+	}
+
+	return result;
 }
 
 Table::~Table()

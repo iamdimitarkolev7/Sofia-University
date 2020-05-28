@@ -25,9 +25,13 @@ public:
 	void addCol(int pos, const Cell& cell);
 	void changeName(std::string newName);
 	void updateCell(int row, int col, std::string value);
-	void deleteCell(int row, int col);
+	void deleteRow(int row);
 	void printRow(int row);
 	void pushRow(std::vector<std::string> data);
+	double sumColumn(int col);
+	double minElementColumn(int col);
+	double maxElementColumn(int col);
+	double productColumn(int col);
 
 	~Table();
 };
