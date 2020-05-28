@@ -23,4 +23,3 @@ public:
 	void incrementViews();
 	void decrementViews();
 };
-
