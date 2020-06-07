@@ -1,0 +1,10 @@
+﻿  Source.cpp
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(17,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(26,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(44,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(48,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(55,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(58,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(64,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Business Plan\Source.cpp(71,21): warning C4018: '<': signed/unsigned mismatch
+  Business Plan.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\homework II\Business Plan\Debug\Business Plan.exe

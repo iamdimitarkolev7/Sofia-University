@@ -1,0 +1,8 @@
+﻿  Book.cpp
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(17,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(36,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(59,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(123,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Alchemistry\Book.cpp(145,24): warning C4018: '<': signed/unsigned mismatch
+  Alchemistry.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\practicum homework\Alchemistry\Debug\Alchemistry.exe
