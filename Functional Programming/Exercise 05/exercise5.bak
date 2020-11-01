@@ -1,0 +1,23 @@
+#lang racket
+
+; Task 2: 
+(define (derive f eps)
+  (λ (x) (/ (- (f (+ x eps)) (f x)) eps)))
+
+
+(define (derive-n f n eps)
+  (if (= n 0)
+      f
+      (derive-n (derive f eps) (- n 1) eps)))
+
+; Task 3: 
+(define (repeated f n)
+  (λ (x)
+    (if (= n 0)
+        x
+        (f ((repeated f (- n 1)) x)))))
+
+(define (func x)
+  (+ x 1))
+
+(repeated (func 2) 5)

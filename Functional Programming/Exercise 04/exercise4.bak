@@ -1,0 +1,22 @@
+#lang racket
+
+; Task 1: check if a is a substring of b (a and b are numbers)
+(define (suffix? a b)
+  (or (and (< a 10)
+           (= a (remainder b 10)))
+      (and (= (remainder a 10) (remainder b 10))
+           (suffix? (quotient a 10) (quotient b 10)))))
+
+(define (substr? a b)
+  (and (<= a b)
+       (or (suffix? a b)
+           (substr? a (quotient b 10)))))
+
+; Task 2:
+(define (my-identity x)
+  x)
+
+
+
+
+
