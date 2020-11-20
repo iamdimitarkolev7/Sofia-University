@@ -1,0 +1,7 @@
+﻿  Exercise3.cpp
+C:\Users\User1\Documents\Sofia-University\SDP\Exercise\Exercise3\Exercise3.cpp(29,14): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\User1\Documents\Sofia-University\SDP\Exercise\Exercise3\Exercise3.cpp(42,18): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\User1\Documents\Sofia-University\SDP\Exercise\Exercise3\Exercise3.cpp(53,14): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\User1\Documents\Sofia-University\SDP\Exercise\Exercise3\Exercise3.cpp(62,18): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\User1\Documents\Sofia-University\SDP\Exercise\Exercise3\Exercise3.cpp(69,23): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Exercise3.vcxproj -> C:\Users\User1\Documents\Sofia-University\SDP\Exercise\x64\Debug\Exercise3.exe
