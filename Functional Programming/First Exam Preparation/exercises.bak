@@ -1,0 +1,46 @@
+#lang racket
+
+; Task 1: Find the sum of the numbers in the interval [a,b] which digits are descending
+(define (sum-numbers a b)
+  (define (ascendingDigits? num)
+    (cond [(and (>= num 0) (<= num 9)) #t]
+          [(<= (remainder num 10) (remainder (quotient num 10) 10)) (ascendingDigits? (quotient num 10))]
+          [else #f]))
+
+  (define (sum-iter current result)
+    (cond [(> current b) result]
+          [(ascendingDigits? current) (sum-iter (+ current 1) (+ result current))]
+          [else (sum-iter (+ 1 current) result)]))
+  (sum-iter a 0))
+
+; Task 2:
+(define (num-bigger-elements lst) 
+  (define (helper cs hs rs counter)
+    (cond [(null? cs)            rs]
+          [(null? hs)            (helper (cdr cs) lst (append rs (list counter)) 0)]
+          [(< (car cs) (car hs)) (helper cs (cdr hs) rs (+ counter 1))]
+          [else                  (helper cs (cdr hs) rs counter)]))
+  (define (appender ls1 ls2 rs)
+    (if (null? ls1)
+        rs
+        (appender (cdr ls1) (cdr ls2) (cons (cons (car ls1) (car ls2)) rs))))
+  (reverse (appender lst (helper lst lst '() 0) '())))
+
+; Task 4:
+(define (repeater str)
+  (λ (count glue) (cond [(= count 1) str]
+                        [else (string-append str glue ((repeater str) (- count 1)  glue))])))
+
+; Task 5:
+(define (sum-digit a b k)
+  (define (sum-digit-iter current result)
+    (cond [(> current b) result]
+          [(= (remainder current k) 0) (sum-digit-iter (+ 1 current) (+ result current))]
+          [else                        (sum-digit-iter (+ 1 current) result)]))
+  (sum-digit-iter a 0))
+
+; Task 6:
+(define  (max-ordered-sublist lst)
+  ("TODO"))
+
+

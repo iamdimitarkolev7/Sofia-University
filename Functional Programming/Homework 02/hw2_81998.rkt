@@ -1,0 +1,37 @@
+#lang racket
+
+; Task 1: Cartesian Product
+(define (cartesian-product xs ys)
+  ;rs is the result list
+  (define (cartesian-product-iter rs helperxs helperys)
+    (cond [(null? helperxs)                        rs]
+          [(null? helperys)                        (cartesian-product-iter rs (cdr helperxs) ys)]
+          [else                                    (cartesian-product-iter (append rs (list (cons (car helperxs) (car helperys)))) helperxs (cdr helperys))]))
+  (cartesian-product-iter '() xs ys))
+
+(cartesian-product '(1 2) '(3 4))
+(cartesian-product '(1 2 3 4 5) '(6 7 8))
+
+; Task 2: Factorize
+(define (prime? n)
+  (define (helper d)
+    (cond [(= d n)               #t]
+          [(= (remainder n d) 0) #f]
+          [else                  (helper (+ d 1))]))
+  (if (= n 1)
+      #f
+      (helper 2)))
+
+(define (factorize n)
+  (define (factorize-iter rs divisor currentNum)
+    (cond [(= currentNum 1)                                            rs]
+          [(and (prime? divisor) (= (remainder currentNum divisor) 0)) (factorize-iter (append rs (list divisor)) divisor (quotient currentNum divisor))]
+          [else                                                        (factorize-iter rs (+ divisor 1) currentNum)]))
+  (factorize-iter '() 2 n))
+
+(factorize 6) 
+(factorize 13) 
+(factorize 123) 
+(factorize 152) 
+
+
