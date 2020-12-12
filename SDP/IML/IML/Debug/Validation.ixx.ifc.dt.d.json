@@ -1,0 +1,10 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "c:\\users\\user1\\documents\\sofia-university\\sdp\\iml\\iml\\validation.ixx",
+        "ProvidedModule": "Validation",
+        "Includes": [],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
