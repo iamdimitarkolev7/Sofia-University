@@ -11,12 +11,11 @@ class IML_Reader
 private:
 	std::string inputFileName, outputFileName;
 	std::stack<Tag*> objectModelTree;
-	std::list<Tag*> tags;
 
 	void tokenize(std::string data);
 	std::string trim(const std::string& data);
 	std::vector<std::string> split(std::string str, std::string delimiter);
-	bool validLanguage(std::string data);
+	//bool validLanguage(std::string data);
 	
 public:
 	IML_Reader(std::string inputFileName, std::string outputFileName);

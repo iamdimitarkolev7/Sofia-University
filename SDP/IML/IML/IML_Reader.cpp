@@ -49,9 +49,41 @@ void IML_Reader::tokenize(std::string data)
 		throw std::logic_error("Error in language");
 	}
 	
-	for (int i = 1; i < tokens.size(); i++)
+	for (size_t i = 1; i < tokens.size(); i++)
 	{
-		std::cout << tokens[i] << std::endl;
+		std::vector<std::string> tagTokens = split(tokens[i], ">");
+
+		for (size_t j = 0; j < tagTokens.size(); j += 2)
+		{
+			if (tagTokens[j][0] != '/')
+			{
+				std::vector<std::string> newTokens = split(tagTokens[j], " ");
+				std::string tagName = newTokens[0];
+				std::vector<std::string> values = split(tagTokens[j + 1], " ");
+				
+				if (newTokens.size() == 2)
+				{
+					//TODO error handling
+					std::string additionalParam = newTokens[1];
+
+					Tag newTag(tagName, values, additionalParam);
+					objectModelTree.push(&newTag);
+				}
+				else if (newTokens.size() == 1)
+				{
+					Tag newTag(tagName, values);
+					objectModelTree.push(&newTag);
+				}
+				else
+				{
+					//TODO throw error
+				}
+			}
+			else
+			{
+				//TODO execution of a tag
+			}
+		}
 	}
 }
 
