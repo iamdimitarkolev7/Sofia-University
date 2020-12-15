@@ -1,4 +1,13 @@
 #include "Tag.h"
+#include "TagExecutionFunctions.h"
+
+Tag::Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam)
+{
+	//TODO Validation
+	tagName = name;
+	tagParam = additionalParam;
+	tagValues= mapToInteger(values);
+}
 
 std::vector<int> Tag::mapToInteger(const std::vector<std::string> &values) const
 {
@@ -13,104 +22,53 @@ std::vector<int> Tag::mapToInteger(const std::vector<std::string> &values) const
 	return result;
 }
 
-void Tag::execute_map_inc() const
+std::vector<int> Tag::map(mapFn mapFunction)
 {
-	const int additionalParam = std::stoi(tagParam.substr(1, tagParam.size() - 2));
-
+	const int additional_param = std::stoi(tagParam.substr(1, tagParam.size() - 2));
+	std::vector<int> result;
+	
 	for (int element : tagValues)
 	{
-		element += additionalParam;
+		element = mapFunction(element, additional_param);
+		result.push_back(element);
 	}
+
+	return result;
 }
 
-void Tag::execute_map_mlt() const
+std::vector<int> Tag::agg(const mapFn reducer, const int& initialValue)
 {
-	const int additionalParam = std::stoi(tagParam.substr(1, tagParam.size() - 2));
+	std::vector<int> result;
+	int res = initialValue;
 
-	for (int element : tagValues)
+	for (int el : tagValues)
 	{
-		element *= additionalParam;
+		res = reducer(res, el);
 	}
-}
 
-void Tag::execute_agg_sum() const
-{
-	//TODO
-}
-
-void Tag::execute_agg_pro() const
-{
-	//TODO
-}
-
-void Tag::execute_agg_avg() const
-{
-	//TODO
-}
-
-void Tag::execute_agg_fst() const
-{
-	//TODO
-}
-
-void Tag::execute_agg_lst() const
-{
-	//TODO
-}
-
-void Tag::execute_srt_rev() const
-{
-	//TODO
-}
-
-void Tag::execute_srt_ord() const
-{
-	//TODO
-}
-
-void Tag::execute_srt_slc() const
-{
-	//TODO
-}
-
-void Tag::execute_srt_dst() const
-{
-	//TODO
-}
-
-Tag::Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam)
-{
-	//TODO Validation
-	tagName = name;
-	tagParam = additionalParam;
-	tagValues= mapToInteger(values);
+	result.push_back(res);
+	return result;
 }
 
 std::vector<int> Tag::executeTag()
 {
+	TagExecutionFunctions f;
+	
 	if (tagName == "MAP-INC")
-		execute_map_inc();
-	if (tagName == "MAP-MLT")
-		execute_map_mlt();
-	if (tagName == "AGG-SUM")
-		execute_agg_sum();
-	if (tagName == "AGG-PRO")
-		execute_agg_pro();
-	if (tagName == "AGG-AVG")
-		execute_agg_avg();
-	if (tagName == "AGG-FST")
-		execute_agg_fst();
-	if (tagName == "AGG-LST")
-		execute_agg_lst();
-	if (tagName == "SRT-REV")
-		execute_srt_rev();
-	if (tagName == "SRT-ORD")
-		execute_srt_ord();
-	if (tagName == "SRT-SLC")
-		execute_srt_slc();
-	if (tagName == "SRT-DST")
-		execute_srt_dst();
-
+		tagValues = map(f.increase);
+	else if (tagName == "MAP-MLT")
+		tagValues = map(f.multiply);
+	else if (tagName == "AGG-SUM")
+		tagValues = agg(f.sum, 0);
+	else if (tagName == "AGG-PRO")
+		tagValues = agg(f.multiply, 1);
+	else if (tagName == "AGG-AVG")
+	{
+		const int tagValuesInitialSize = tagValues.size();
+		tagValues = agg(f.sum, 0);
+		tagValues[0] /= tagValuesInitialSize;
+	}
+	
 	return tagValues;
 }
 
@@ -120,4 +78,14 @@ void Tag::addValues(const std::vector<int>& values)
 	{
 		tagValues.push_back(element);
 	}
+}
+
+std::string Tag::getTagName() const
+{
+	return tagName;
+}
+
+std::vector<int> Tag::getValues() const
+{
+	return tagValues;
 }

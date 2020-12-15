@@ -1,8 +1,8 @@
 #pragma once
 #ifndef __IML_READER
 #define __IML_READER
+
 #include <fstream>
-#include <list>
 #include <stack>
 #include "Tag.h"
 
@@ -10,7 +10,7 @@ class IML_Reader
 {
 private:
 	std::string inputFileName, outputFileName;
-	std::stack<Tag*> objectModelTree;
+	std::stack<Tag> objectModelTree;
 
 	void tokenize(std::string data);
 	std::string trim(const std::string& data);

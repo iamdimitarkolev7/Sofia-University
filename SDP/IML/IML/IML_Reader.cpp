@@ -42,6 +42,7 @@ std::vector<std::string> IML_Reader::split(std::string str, std::string delimite
 
 void IML_Reader::tokenize(std::string data)
 {
+	//TODO logic should be updated
 	std::vector<std::string> tokens = split(data, "<");
 
 	if (tokens[0] != "")
@@ -67,12 +68,12 @@ void IML_Reader::tokenize(std::string data)
 					std::string additionalParam = newTokens[1];
 
 					Tag newTag(tagName, values, additionalParam);
-					objectModelTree.push(&newTag);
+					objectModelTree.push(newTag);
 				}
 				else if (newTokens.size() == 1)
 				{
 					Tag newTag(tagName, values);
-					objectModelTree.push(&newTag);
+					objectModelTree.push(newTag);
 				}
 				else
 				{
@@ -81,7 +82,25 @@ void IML_Reader::tokenize(std::string data)
 			}
 			else
 			{
-				//TODO execution of a tag
+				std::string closingTagName = tagTokens[j].erase(0, 1);
+
+				if (closingTagName == objectModelTree.top().getTagName())
+				{
+					std::vector<int> result = objectModelTree.top().executeTag();
+					objectModelTree.pop();
+
+					if (!objectModelTree.empty())
+						objectModelTree.top().addValues(result);
+					else if (objectModelTree.size() == 1)
+					{
+						for (int element : objectModelTree.top().getValues())
+						{
+							std::cout << element << " ";
+						}
+
+						std::cout << std::endl;
+					}
+				}
 			}
 		}
 	}

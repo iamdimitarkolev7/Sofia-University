@@ -143,11 +143,13 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Tag.cpp" />
+    <ClCompile Include="TagExecutionFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IML_Reader.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Tag.h" />
+    <ClInclude Include="TagExecutionFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
