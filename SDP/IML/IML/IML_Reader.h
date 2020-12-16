@@ -12,8 +12,10 @@ private:
 	std::string inputFileName, outputFileName;
 	std::stack<Tag> objectModelTree;
 
-	void tokenize(std::string data);
-	std::string trim(const std::string& data);
+	void readTag(const std::string& tag);
+	void execTag(const std::string& tag);
+	
+	void tokenize(const std::string& data);
 	std::vector<std::string> split(std::string str, std::string delimiter);
 	//bool validLanguage(std::string data);
 	

@@ -7,20 +7,6 @@ IML_Reader::IML_Reader(std::string inputFileName, std::string outputFileName)
 	this->outputFileName = outputFileName;
 }
 
-std::string IML_Reader::trim(const std::string& str)
-{
-	size_t first = str.find_first_not_of(' ');
-
-	if (std::string::npos == first)
-	{
-		return str;
-	}
-
-	size_t last = str.find_last_not_of(' ');
-
-	return str.substr(first, (last - first + 1));
-}
-
 std::vector<std::string> IML_Reader::split(std::string str, std::string delimiter)
 {
 	std::vector<std::string> tokens;
@@ -40,69 +26,82 @@ std::vector<std::string> IML_Reader::split(std::string str, std::string delimite
 	return tokens;
 }
 
-void IML_Reader::tokenize(std::string data)
+void IML_Reader::readTag(const std::string& tag)
 {
-	//TODO logic should be updated
+	std::vector<std::string> newTokens = split(tag, " ");
+	std::string tagName = newTokens[0];
+	std::vector<std::string> values = split(tag, " ");
+
+	if (newTokens.size() == 2)
+	{
+		std::string additionalParam = newTokens[1];
+
+		Tag newTag(tagName, values, additionalParam);
+		objectModelTree.push(newTag);
+	}
+	else if (newTokens.size() == 1)
+	{
+		Tag newTag(tagName, values);
+		objectModelTree.push(newTag);
+	}
+	else
+	{
+		throw std::logic_error("Incorrect grammar of IML");
+	}
+}
+
+void IML_Reader::execTag(const std::string& tag)
+{
+	if (tag == objectModelTree.top().getTagName())
+	{
+		std::vector<int> result = objectModelTree.top().executeTag();
+		objectModelTree.pop();
+
+		if (!objectModelTree.empty())
+			objectModelTree.top().addValues(result);
+		else
+		{
+			//TODO ready to write file
+		}
+	}
+	else
+	{
+		throw std::logic_error("Incorrect grammar of IML");
+	}
+}
+
+void IML_Reader::tokenize(const std::string& data)
+{
 	std::vector<std::string> tokens = split(data, "<");
 
-	if (tokens[0] != "")
+	try
 	{
-		throw std::logic_error("Error in language");
-	}
-	
-	for (size_t i = 1; i < tokens.size(); i++)
-	{
-		std::vector<std::string> tagTokens = split(tokens[i], ">");
-
-		for (size_t j = 0; j < tagTokens.size(); j += 2)
+		if (tokens[0] != "")
 		{
-			if (tagTokens[j][0] != '/')
-			{
-				std::vector<std::string> newTokens = split(tagTokens[j], " ");
-				std::string tagName = newTokens[0];
-				std::vector<std::string> values = split(tagTokens[j + 1], " ");
-				
-				if (newTokens.size() == 2)
-				{
-					//TODO error handling
-					std::string additionalParam = newTokens[1];
+			throw std::logic_error("The IML must start with opening tag!");
+		}
 
-					Tag newTag(tagName, values, additionalParam);
-					objectModelTree.push(newTag);
-				}
-				else if (newTokens.size() == 1)
+		for (size_t i = 1; i < tokens.size(); i++)
+		{
+			std::vector<std::string> tagTokens = split(tokens[i], ">");
+
+			for (size_t j = 0; j < tagTokens.size(); j += 2)
+			{
+				if (tagTokens[j][0] != '/')
 				{
-					Tag newTag(tagName, values);
-					objectModelTree.push(newTag);
+					readTag(tagTokens[j]);
 				}
 				else
 				{
-					//TODO throw error
-				}
-			}
-			else
-			{
-				std::string closingTagName = tagTokens[j].erase(0, 1);
-
-				if (closingTagName == objectModelTree.top().getTagName())
-				{
-					std::vector<int> result = objectModelTree.top().executeTag();
-					objectModelTree.pop();
-
-					if (!objectModelTree.empty())
-						objectModelTree.top().addValues(result);
-					else if (objectModelTree.size() == 1)
-					{
-						for (int element : objectModelTree.top().getValues())
-						{
-							std::cout << element << " ";
-						}
-
-						std::cout << std::endl;
-					}
+					std::string closingTagName = tagTokens[j].erase(0, 1);
+					execTag(closingTagName);
 				}
 			}
 		}
+	}
+	catch(const std::exception& err)
+	{
+		std::cout << err.what() << std::endl;
 	}
 }
 
@@ -110,18 +109,27 @@ void IML_Reader::read(std::ifstream& in, std::ofstream& out)
 {
 	std::string inputData, data;
 
-	in.open(inputFileName);
-	
-	if (in.is_open())
+	try
 	{
-		while (!in.eof())
+		in.open(inputFileName);
+
+		if (in.is_open())
 		{
-			std::getline(in, inputData);
-			data += inputData;
+			while (!in.eof())
+			{
+				std::getline(in, inputData);
+				data += inputData;
+			}
 		}
+		else
+		{
+			throw std::logic_error("Cannot open that file");
+		}
+		
+		tokenize(data);
 	}
-
-	//TODO error handling
-
-	tokenize(trim(data));
+	catch (const std::exception& err)
+	{
+		std::cout << err.what() << std::endl;
+	}
 }

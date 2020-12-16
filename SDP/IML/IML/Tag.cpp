@@ -22,52 +22,34 @@ std::vector<int> Tag::mapToInteger(const std::vector<std::string> &values) const
 	return result;
 }
 
-std::vector<int> Tag::map(mapFn mapFunction)
-{
-	const int additional_param = std::stoi(tagParam.substr(1, tagParam.size() - 2));
-	std::vector<int> result;
-	
-	for (int element : tagValues)
-	{
-		element = mapFunction(element, additional_param);
-		result.push_back(element);
-	}
-
-	return result;
-}
-
-std::vector<int> Tag::agg(const mapFn reducer, const int& initialValue)
-{
-	std::vector<int> result;
-	int res = initialValue;
-
-	for (int el : tagValues)
-	{
-		res = reducer(res, el);
-	}
-
-	result.push_back(res);
-	return result;
-}
-
 std::vector<int> Tag::executeTag()
 {
 	TagExecutionFunctions f;
 	
 	if (tagName == "MAP-INC")
-		tagValues = map(f.increase);
+		f.increase(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "MAP-MLT")
-		tagValues = map(f.multiply);
+		f.multiply(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "AGG-SUM")
-		tagValues = agg(f.sum, 0);
+		f.sum(tagValues);
 	else if (tagName == "AGG-PRO")
-		tagValues = agg(f.multiply, 1);
+		f.pro(tagValues);
 	else if (tagName == "AGG-AVG")
-	{
-		const int tagValuesInitialSize = tagValues.size();
-		tagValues = agg(f.sum, 0);
-		tagValues[0] /= tagValuesInitialSize;
-	}
+		f.average(tagValues);
+	else if (tagName == "AGG-FST")
+		f.first(tagValues);
+	else if (tagName == "AGG-LST")
+		f.last(tagValues);
+	else if (tagName == "SRT-REV")
+		f.reverse(tagValues);
+	else if (tagName == "SRT-ORD" && tagParam == "ASC")
+		f.sortAsc(tagValues);
+	else if (tagName == "SRT-ORD" && tagParam == "DSC")
+		f.sortDsc(tagValues);
+	else if (tagName == "SRT-SLC")
+		f.slice(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+	else if (tagName == "SRT-DST")
+		f.removeDuplicates(tagValues);
 	
 	return tagValues;
 }
