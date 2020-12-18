@@ -92,14 +92,8 @@ void IML_Reader::execTag(const std::string& tag, const std::string& values)
 		}
 		else
 		{
-			std::list<int>::iterator it;
-
-			for (it = result.begin(); it != result.end(); ++it)
-			{
-				std::cout << *it << " ";
-			}
-
-			std::cout << std::endl;
+			std::ofstream out;
+			write(out, result);
 		}
 	}
 	else
@@ -141,7 +135,7 @@ void IML_Reader::inspect(const std::string& data)
 	}
 }
 
-void IML_Reader::read(std::ifstream& in, std::ofstream& out)
+void IML_Reader::read(std::ifstream& in)
 {
 	std::string inputData, data;
 
@@ -163,9 +157,25 @@ void IML_Reader::read(std::ifstream& in, std::ofstream& out)
 		}
 		
 		inspect(data);
+		in.close();
 	}
 	catch (const std::exception& err)
 	{
 		std::cout << err.what() << std::endl;
 	}
+}
+
+void IML_Reader::write(std::ofstream& out, std::list<int> data)
+{
+	out.open(outputFileName);
+
+	std::list<int>::iterator it;
+
+	for (it = data.begin(); it != data.end(); ++it)
+	{
+		out << *it;
+		out << " ";
+	}
+
+	out.close();
 }

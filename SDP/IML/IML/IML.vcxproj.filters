@@ -27,6 +27,9 @@
     <ClCompile Include="IML_Reader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IML_Reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

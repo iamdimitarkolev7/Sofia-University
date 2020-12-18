@@ -91,7 +91,7 @@ void System::run()
 		if (validTxt(inputFile) && validTxt(outputFile))
 		{
 			IML_Reader iml = IML_Reader(inputFile, outputFile);
-			iml.read(in, out);
+			iml.read(in);
 		}
 	}
 	catch (const std::exception& err)
