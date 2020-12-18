@@ -1,18 +1,17 @@
 #include "Tag.h"
-#include "TagExecutionFunctions.h"
 
 Tag::Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam)
 {
 	//TODO Validation
 	tagName = name;
 	tagParam = additionalParam;
-	tagValues= mapToInteger(values);
+	tagValues= mapToList(values);
 }
 
-std::vector<int> Tag::mapToInteger(const std::vector<std::string> &values) const
+std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 {
 	//TODO error handling
-	std::vector<int> result;
+	std::list<int> result;
 
 	for (size_t i = 0; i < values.size(); i++)
 	{
@@ -22,15 +21,13 @@ std::vector<int> Tag::mapToInteger(const std::vector<std::string> &values) const
 	return result;
 }
 
-std::vector<int> Tag::executeTag()
-{
-	TagExecutionFunctions f;
-	
-	if (tagName == "MAP-INC")
-		f.increase(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+std::list<int> Tag::executeTag()
+{	
+	/*if (tagName == "MAP-INC")
+		//std::stoi(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "MAP-MLT")
-		f.multiply(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
-	else if (tagName == "AGG-SUM")
+		tagValues.map(f.mlt , std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+	/*else if (tagName == "AGG-SUM")
 		f.sum(tagValues);
 	else if (tagName == "AGG-PRO")
 		f.pro(tagValues);
@@ -50,15 +47,18 @@ std::vector<int> Tag::executeTag()
 		f.slice(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "SRT-DST")
 		f.removeDuplicates(tagValues);
+	*/
 	
 	return tagValues;
 }
 
-void Tag::addValues(const std::vector<int>& values)
+void Tag::addValues(std::list<int> values)
 {
-	for (int element : values)
+	std::list<int>::iterator it;
+
+	for (it = values.begin(); it != values.end(); ++it)
 	{
-		tagValues.push_back(element);
+		tagValues.push_back(*it);
 	}
 }
 
@@ -67,7 +67,7 @@ std::string Tag::getTagName() const
 	return tagName;
 }
 
-std::vector<int> Tag::getValues() const
+std::list<int> Tag::getValues() const
 {
 	return tagValues;
 }

@@ -12,11 +12,14 @@ private:
 	std::string inputFileName, outputFileName;
 	std::stack<Tag> objectModelTree;
 
-	void readTag(const std::string& tag);
-	void execTag(const std::string& tag);
+	void readTag(const std::string& tag, const std::string& values);
+	void execTag(const std::string& tag, const std::string& value);
 	
-	void tokenize(const std::string& data);
-	std::vector<std::string> split(std::string str, std::string delimiter);
+	void inspect(const std::string& data);
+	std::vector<std::string> split(std::string str, const std::string& delimiter);
+
+	std::list<int> mapToInteger(const std::string& values);
+
 	//bool validLanguage(std::string data);
 	
 public:

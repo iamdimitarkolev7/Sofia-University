@@ -2,24 +2,26 @@
 #ifndef __TAG
 #define __TAG
 
+#include <list>
 #include <string>
 #include <vector>
+#include <numeric>
 
 class Tag
 {
 	std::string tagName;
-	std::vector<int> tagValues;
+	std::list<int> tagValues;
 	std::string tagParam;
 	
-	std::vector<int> mapToInteger(const std::vector<std::string>& values) const;
+	std::list<int> mapToList(const std::vector<std::string>& values) const;
 	
 public:
 	Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam = "");
 
-	std::vector<int> executeTag();
-	void addValues(const std::vector<int>&);
+	std::list<int> executeTag();
+	void addValues(std::list<int> values);
 	std::string getTagName() const;
-	std::vector<int> getValues() const;
+	std::list<int> getValues() const;
 };
 
 #endif

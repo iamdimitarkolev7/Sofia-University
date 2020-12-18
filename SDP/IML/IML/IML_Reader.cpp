@@ -1,5 +1,6 @@
 #include "IML_Reader.h"
 #include <iostream>
+#include <numeric>
 
 IML_Reader::IML_Reader(std::string inputFileName, std::string outputFileName)
 {
@@ -7,7 +8,7 @@ IML_Reader::IML_Reader(std::string inputFileName, std::string outputFileName)
 	this->outputFileName = outputFileName;
 }
 
-std::vector<std::string> IML_Reader::split(std::string str, std::string delimiter)
+std::vector<std::string> IML_Reader::split(std::string str, const std::string& delimiter)
 {
 	std::vector<std::string> tokens;
 	std::string token;
@@ -26,11 +27,24 @@ std::vector<std::string> IML_Reader::split(std::string str, std::string delimite
 	return tokens;
 }
 
-void IML_Reader::readTag(const std::string& tag)
+std::list<int> IML_Reader::mapToInteger(const std::string& values)
+{
+	std::list<int> result;
+	std::vector<std::string> vals = split(values, " ");
+
+	for (size_t i = 0; i < vals.size(); i++)
+	{
+		result.push_back(std::stoi(vals[i]));
+	}
+
+	return result;
+}
+
+void IML_Reader::readTag(const std::string& tag, const std::string& params)
 {
 	std::vector<std::string> newTokens = split(tag, " ");
 	std::string tagName = newTokens[0];
-	std::vector<std::string> values = split(tag, " ");
+	std::vector<std::string> values = split(params, " ");
 
 	if (newTokens.size() == 2)
 	{
@@ -50,18 +64,34 @@ void IML_Reader::readTag(const std::string& tag)
 	}
 }
 
-void IML_Reader::execTag(const std::string& tag)
+void IML_Reader::execTag(const std::string& tag, const std::string& values)
 {
 	if (tag == objectModelTree.top().getTagName())
 	{
-		std::vector<int> result = objectModelTree.top().executeTag();
+		std::list<int> result = objectModelTree.top().executeTag();
+		
 		objectModelTree.pop();
 
 		if (!objectModelTree.empty())
+		{
 			objectModelTree.top().addValues(result);
+			
+			if (values != "")
+			{
+				const std::list<int> additionalValue = mapToInteger(values);
+				objectModelTree.top().addValues(additionalValue);
+			}
+		}
 		else
 		{
-			//TODO ready to write file
+			std::list<int>::iterator it;
+
+			for (it = result.begin(); it != result.end(); ++it)
+			{
+				std::cout << *it << " ";
+			}
+
+			std::cout << std::endl;
 		}
 	}
 	else
@@ -70,7 +100,7 @@ void IML_Reader::execTag(const std::string& tag)
 	}
 }
 
-void IML_Reader::tokenize(const std::string& data)
+void IML_Reader::inspect(const std::string& data)
 {
 	std::vector<std::string> tokens = split(data, "<");
 
@@ -84,18 +114,16 @@ void IML_Reader::tokenize(const std::string& data)
 		for (size_t i = 1; i < tokens.size(); i++)
 		{
 			std::vector<std::string> tagTokens = split(tokens[i], ">");
+			std::string tag = tagTokens[0], values = tagTokens[1];
 
-			for (size_t j = 0; j < tagTokens.size(); j += 2)
+			if (tag[0] != '/')
 			{
-				if (tagTokens[j][0] != '/')
-				{
-					readTag(tagTokens[j]);
-				}
-				else
-				{
-					std::string closingTagName = tagTokens[j].erase(0, 1);
-					execTag(closingTagName);
-				}
+				readTag(tag, values);
+			}
+			else
+			{
+				std::string closingTagName = tag.erase(0, 1);
+				execTag(closingTagName, values);
 			}
 		}
 	}
@@ -126,7 +154,7 @@ void IML_Reader::read(std::ifstream& in, std::ofstream& out)
 			throw std::logic_error("Cannot open that file");
 		}
 		
-		tokenize(data);
+		inspect(data);
 	}
 	catch (const std::exception& err)
 	{
