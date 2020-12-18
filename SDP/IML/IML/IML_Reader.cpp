@@ -55,8 +55,16 @@ void IML_Reader::readTag(const std::string& tag, const std::string& params)
 	}
 	else if (newTokens.size() == 1)
 	{
-		Tag newTag(tagName, values);
-		objectModelTree.push(newTag);
+		if (values[0] != "")
+		{
+			Tag newTag(tagName, values);
+			objectModelTree.push(newTag);
+		}
+		else
+		{
+			Tag newTag(tagName, {});
+			objectModelTree.push(newTag);
+		}
 	}
 	else
 	{

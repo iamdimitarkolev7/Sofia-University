@@ -16,7 +16,8 @@ class Tag
 	std::list<int> mapToList(const std::vector<std::string>& values) const;
 	
 public:
-	Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam = "");
+	Tag(std::string& name);
+	Tag(std::string& name, std::vector<std::string> values = {}, std::string additionalParam = "");
 
 	std::list<int> executeTag();
 	void addValues(std::list<int> values);

@@ -1,6 +1,6 @@
 #include "Tag.h"
 
-Tag::Tag(std::string &name, std::vector<std::string> &values, std::string additionalParam)
+Tag::Tag(std::string &name, std::vector<std::string> values, std::string additionalParam)
 {
 	//TODO Validation
 	tagName = name;
@@ -10,7 +10,7 @@ Tag::Tag(std::string &name, std::vector<std::string> &values, std::string additi
 
 std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 {
-	//TODO error handling
+	//TODO error handling and reading negative numbers
 	std::list<int> result;
 
 	for (size_t i = 0; i < values.size(); i++)
@@ -22,33 +22,79 @@ std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 }
 
 std::list<int> Tag::executeTag()
-{	
-	/*if (tagName == "MAP-INC")
-		//std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+{
+	if (tagName == "MAP-INC")
+	{
+		int inc_val = std::stoi(tagParam.substr(1, tagParam.size() - 2));
+		std::list<int>::iterator it;
+
+		for (it = tagValues.begin(); it != tagValues.end(); ++it)
+			*it += inc_val;
+	}
 	else if (tagName == "MAP-MLT")
-		tagValues.map(f.mlt , std::stoi(tagParam.substr(1, tagParam.size() - 2)));
-	/*else if (tagName == "AGG-SUM")
-		f.sum(tagValues);
+	{
+		int mlt_val = std::stoi(tagParam.substr(1, tagParam.size() - 2));
+		std::list<int>::iterator it;
+
+		for (it = tagValues.begin(); it != tagValues.end(); ++it)
+			*it += mlt_val;
+	}
+	else if (tagName == "AGG-SUM")
+	{
+		int result = std::reduce(tagValues.begin(), tagValues.end(), 0,
+			[](int a, int b)->int {return a + b; });
+		tagValues.clear();
+		tagValues.push_back(result);
+	}
 	else if (tagName == "AGG-PRO")
-		f.pro(tagValues);
+	{
+		const int result = std::reduce(tagValues.begin(), tagValues.end(), 1,
+			[](int a, int b)->int {return a * b; });
+		tagValues.clear();
+		tagValues.push_back(result);
+	}
 	else if (tagName == "AGG-AVG")
-		f.average(tagValues);
+	{
+		const int result = std::reduce(tagValues.begin(), tagValues.end(), 0,
+			[](int a, int b)->int {return a + b; }) / tagValues.size();
+		tagValues.clear();
+		tagValues.push_back(result);
+	}
 	else if (tagName == "AGG-FST")
-		f.first(tagValues);
+	{
+		const int result = tagValues.front();
+		tagValues.clear();
+		tagValues.push_back(result);
+	}
 	else if (tagName == "AGG-LST")
-		f.last(tagValues);
+	{
+		const int result = tagValues.back();
+		tagValues.clear();
+		tagValues.push_back(result);
+	}
 	else if (tagName == "SRT-REV")
-		f.reverse(tagValues);
-	else if (tagName == "SRT-ORD" && tagParam == "ASC")
-		f.sortAsc(tagValues);
-	else if (tagName == "SRT-ORD" && tagParam == "DSC")
-		f.sortDsc(tagValues);
+		tagValues.reverse();
+	else if (tagName == "SRT-ORD" && tagParam == "\"ASC\"")
+		tagValues.sort();
+	else if (tagName == "SRT-ORD" && tagParam == "\"DSC\"")
+		tagValues.sort([](int a, int b)->bool {return a > b; });
 	else if (tagName == "SRT-SLC")
-		f.slice(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+	{
+		//TODO fix error
+		size_t position = std::stoi(tagParam.substr(1, tagParam.size() - 2));
+		std::list<int>::iterator it = tagValues.begin();
+		
+		while (position != 0)
+		{
+			++it;
+			position--;
+		}
+
+		tagValues.splice(it, tagValues);
+	}
 	else if (tagName == "SRT-DST")
-		f.removeDuplicates(tagValues);
-	*/
-	
+		tagValues.unique();
+
 	return tagValues;
 }
 
