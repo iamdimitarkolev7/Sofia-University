@@ -68,7 +68,7 @@ void IML_Reader::readTag(const std::string& tag, const std::string& params)
 	}
 	else
 	{
-		throw std::logic_error("Incorrect grammar of IML");
+		throw std::logic_error("Incorrect IML usage!");
 	}
 }
 
@@ -98,7 +98,7 @@ void IML_Reader::execTag(const std::string& tag, const std::string& values)
 	}
 	else
 	{
-		throw std::logic_error("Incorrect grammar of IML");
+		throw std::logic_error("Incorrect IML nesting of tags! Every tag must have a closing tag");
 	}
 }
 
@@ -106,32 +106,25 @@ void IML_Reader::inspect(const std::string& data)
 {
 	std::vector<std::string> tokens = split(data, "<");
 
-	try
+	if (tokens[0] != "")
 	{
-		if (tokens[0] != "")
-		{
-			throw std::logic_error("The IML must start with opening tag!");
-		}
-
-		for (size_t i = 1; i < tokens.size(); i++)
-		{
-			std::vector<std::string> tagTokens = split(tokens[i], ">");
-			std::string tag = tagTokens[0], values = tagTokens[1];
-
-			if (tag[0] != '/')
-			{
-				readTag(tag, values);
-			}
-			else
-			{
-				std::string closingTagName = tag.erase(0, 1);
-				execTag(closingTagName, values);
-			}
-		}
+		throw std::logic_error("The IML must start with opening tag!");
 	}
-	catch(const std::exception& err)
+
+	for (size_t i = 1; i < tokens.size(); i++)
 	{
-		std::cout << err.what() << std::endl;
+		std::vector<std::string> tagTokens = split(tokens[i], ">");
+		std::string tag = tagTokens[0], values = tagTokens[1];
+
+		if (tag[0] != '/')
+		{
+			readTag(tag, values);
+		}
+		else
+		{
+			std::string closingTagName = tag.erase(0, 1);
+			execTag(closingTagName, values);
+		}
 	}
 }
 
@@ -139,30 +132,23 @@ void IML_Reader::read(std::ifstream& in)
 {
 	std::string inputData, data;
 
-	try
-	{
-		in.open(inputFileName);
+	in.open(inputFileName);
 
-		if (in.is_open())
-		{
-			while (!in.eof())
-			{
-				std::getline(in, inputData);
-				data += inputData;
-			}
-		}
-		else
-		{
-			throw std::logic_error("Cannot open that file");
-		}
-		
-		inspect(data);
-		in.close();
-	}
-	catch (const std::exception& err)
+	if (in.is_open())
 	{
-		std::cout << err.what() << std::endl;
+		while (!in.eof())
+		{
+			std::getline(in, inputData);
+			data += inputData;
+		}
 	}
+	else
+	{
+		throw std::logic_error("Cannot open that file");
+	}
+
+	inspect(data);
+	in.close();
 }
 
 void IML_Reader::write(std::ofstream& out, std::list<int> data)

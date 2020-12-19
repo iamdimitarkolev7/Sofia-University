@@ -14,6 +14,8 @@ class Tag
 	std::string tagParam;
 	
 	std::list<int> mapToList(const std::vector<std::string>& values) const;
+	bool validName(std::string name);
+	bool validParam(std::string param);
 	
 public:
 	Tag(std::string& name);

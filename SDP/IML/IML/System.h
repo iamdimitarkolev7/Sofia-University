@@ -7,10 +7,8 @@
 
 class System
 {
-	std::vector<std::string> tags;
-	
 	std::vector<std::string> split(std::string str, std::string delimiter);
-	std::string trim(const std::string str);
+	bool validTxt(std::string fileName);
 	
 	System();
 	
@@ -19,7 +17,6 @@ public:
 	System(const System&) = delete;
 	void operator=(const System&) = delete;
 
-	bool validTxt(std::string fileName);
 	void run();
 
 	~System();

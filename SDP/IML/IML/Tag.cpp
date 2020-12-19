@@ -1,10 +1,10 @@
 #include "Tag.h"
-
+#include <iostream>
+#include <stdexcept>
 #include "Functions.h"
 
 Tag::Tag(std::string &name, std::vector<std::string> values, std::string additionalParam)
-{
-	//TODO Validation
+{	
 	tagName = name;
 	tagParam = additionalParam;
 	tagValues= mapToList(values);
@@ -12,12 +12,18 @@ Tag::Tag(std::string &name, std::vector<std::string> values, std::string additio
 
 std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 {
-	//TODO error handling
 	std::list<int> result;
 
 	for (size_t i = 0; i < values.size(); i++)
 	{
-		result.push_back(std::stoi(values[i]));
+		try 
+		{
+			result.push_back(std::stoi(values[i]));
+		}
+		catch (const std::exception& err)
+		{
+			std::cout << "The value must be a valid integer!" << std::endl;
+		}
 	}
 
 	return result;
@@ -73,4 +79,23 @@ std::string Tag::getTagName() const
 std::list<int> Tag::getValues() const
 {
 	return tagValues;
+}
+
+bool Tag::validName(std::string name)
+{
+	std::vector<std::string> allValidTags = { "MAP-INC", "MAP-MLT", "AGG-SUM", "AGG-PRO", "AGG-AVG", "AGG-FST",
+		"AGG-LST", "SRT-REV", "SRT-ORD", "SRT-SLC", "SRT-DST" };
+
+	if (!(std::find(allValidTags.begin(), allValidTags.end(), name) != allValidTags.end()))
+	{
+		throw std::logic_error(name + " is not a valid tag");
+	}
+
+	return true;
+}
+
+bool Tag::validParam(std::string param)
+{
+	//TODO
+	return true;
 }

@@ -9,10 +9,7 @@ System& System::i()
 	return instance;
 }
 
-System::System()
-{
-	tags = {"MAP-INC", "MAP-MLT", "AGG-SUM", "AGG-PRO", "AGG-AVG", "AGG-FST", "AGG-LST", "SRT-REV", "SRT-ORD", "SRT-SLC", "SRT-DST"};
-}
+System::System(){}
 
 System::~System()
 {
@@ -36,20 +33,6 @@ std::vector<std::string> System::split(std::string str, std::string delimiter)
 	tokens.push_back(str);
 
 	return tokens;
-}
-
-std::string System::trim(const std::string str)
-{
-	size_t first = str.find_first_not_of(' ');
-
-	if (std::string::npos == first)
-	{
-		return str;
-	}
-
-	size_t last = str.find_last_not_of(' ');
-
-	return str.substr(first, (last - first + 1));
 }
 
 bool System::validTxt(std::string fileName)
@@ -83,15 +66,17 @@ void System::run()
 			throw std::logic_error("You must type 2 parameters");
 		}
 
-		std::string inputFile = tokens[0];
-		std::string outputFile = tokens[1];
+		std::string inputFile = tokens[0], outputFile = tokens[1];
 		std::ifstream in;
-		std::ofstream out;
 
 		if (validTxt(inputFile) && validTxt(outputFile))
 		{
 			IML_Reader iml = IML_Reader(inputFile, outputFile);
 			iml.read(in);
+		}
+		else
+		{
+			throw std::logic_error("Input files are not valid *.txt files");
 		}
 	}
 	catch (const std::exception& err)
