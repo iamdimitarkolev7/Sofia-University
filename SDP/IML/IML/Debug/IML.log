@@ -1,7 +1,2 @@
 ﻿  IML_Reader.cpp
-  Source.cpp
-  System.cpp
-  Tag.cpp
-C:\Users\User1\Documents\Sofia-University\SDP\IML\IML\Tag.cpp(23,32): warning C4101: 'err': unreferenced local variable
-  Generating Code...
   IML.vcxproj -> C:\Users\User1\Documents\Sofia-University\SDP\IML\Debug\IML.exe

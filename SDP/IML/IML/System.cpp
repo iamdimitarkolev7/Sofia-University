@@ -81,7 +81,6 @@ void System::run()
 	}
 	catch (const std::exception& err)
 	{
-		std::cout << "ERROR!" << std::endl;
 		std::cout << err.what() << std::endl;
 	}
 }

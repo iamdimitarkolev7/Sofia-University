@@ -4,9 +4,12 @@
 #include "Functions.h"
 
 Tag::Tag(std::string &name, std::vector<std::string> values, std::string additionalParam)
-{	
-	tagName = name;
-	tagParam = additionalParam;
+{
+	if (validName(name))
+		tagName = name;
+	if (validParam(additionalParam))
+		tagParam = additionalParam;
+	
 	tagValues= mapToList(values);
 }
 
@@ -16,13 +19,13 @@ std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 
 	for (size_t i = 0; i < values.size(); i++)
 	{
-		try 
+		try
 		{
 			result.push_back(std::stoi(values[i]));
 		}
-		catch (const std::exception& err)
+		catch(const std::exception &err)
 		{
-			std::cout << "The value must be a valid integer!" << std::endl;
+			throw std::logic_error(values[i] + " is not a valid value for " + tagName + " tag");
 		}
 	}
 
@@ -81,10 +84,10 @@ std::list<int> Tag::getValues() const
 	return tagValues;
 }
 
-bool Tag::validName(std::string name)
+bool Tag::validName(std::string name) const
 {
-	std::vector<std::string> allValidTags = { "MAP-INC", "MAP-MLT", "AGG-SUM", "AGG-PRO", "AGG-AVG", "AGG-FST",
-		"AGG-LST", "SRT-REV", "SRT-ORD", "SRT-SLC", "SRT-DST" };
+	std::vector<std::string> allValidTags = { "MAP-INC", "MAP-MLT", "AGG-SUM", "AGG-PRO", "AGG-AVG",
+		"AGG-FST", "AGG-LST", "SRT-REV", "SRT-ORD", "SRT-SLC", "SRT-DST" };
 
 	if (!(std::find(allValidTags.begin(), allValidTags.end(), name) != allValidTags.end()))
 	{
@@ -94,8 +97,31 @@ bool Tag::validName(std::string name)
 	return true;
 }
 
-bool Tag::validParam(std::string param)
+bool Tag::validParam(std::string param) const
 {
-	//TODO
+	if (tagName == "MAP-INC" || tagName == "MAP-MLT" || tagName == "SRT-SLC")
+	{
+		try
+		{
+			int value = std::stoi(param.substr(1, param.size() - 2));
+		}
+		catch (const std::exception& err)
+		{
+			std::cout << "The param of " << tagName << " must be a valid integer!" << std::endl;
+			return false;
+		}
+	}
+	else if (tagName == "SRT-ORD")
+	{
+		if (param.empty())
+		{
+			throw std::logic_error("The " + tagName + " must have additional parameter: \"ASC\" or \"DSC\"!");
+		}
+		if (param != "\"ASC\"" && param != "\"DSC\"")
+		{
+			throw std::logic_error("The " + tagName + " must have a valid parameter: \"ASC\" or \"DSC\"!");
+		}
+	}
+
 	return true;
 }
