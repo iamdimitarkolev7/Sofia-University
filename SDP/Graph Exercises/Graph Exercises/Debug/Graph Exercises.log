@@ -1,0 +1,6 @@
+﻿  Graph.cpp
+C:\Users\User1\Documents\Sofia-University\SDP\Graph Exercises\Graph Exercises\Graph.cpp(52,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Documents\Sofia-University\SDP\Graph Exercises\Graph Exercises\Graph.cpp(69,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Documents\Sofia-University\SDP\Graph Exercises\Graph Exercises\Graph.cpp(108,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Documents\Sofia-University\SDP\Graph Exercises\Graph Exercises\Graph.cpp(133,20): warning C4018: '<': signed/unsigned mismatch
+  Graph Exercises.vcxproj -> C:\Users\User1\Documents\Sofia-University\SDP\Graph Exercises\Debug\Graph Exercises.exe
