@@ -33,7 +33,7 @@ int main()
 		new Node{2,
 			new Node{4,
 				new Node{5, nullptr, nullptr},
-				nullptr},
+				new Node{6, nullptr, nullptr}},
 			nullptr},
 		new Node{3,
 			new Node{7,
