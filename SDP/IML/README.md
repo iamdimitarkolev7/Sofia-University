@@ -15,17 +15,17 @@ IML is a tag language. The idea is to enable the user to make mapping, aggregati
     * <MAP-MLT "**2**">**1 2 3**</MAP-MLT> => **2 4 6** (multiplies each value inside the tag by the parameter)
 
 2. AGG TAG Category
-    * <AGG-SUM>**1 2 3**</AGG-SUM> => **6** (returns sum of all values inside of the tag) 
-    * <AGG-PRO>**1 2 3**</AGG-PRO> => **6** (returns the product of all values inside of the tag)
-    * <AGG-AVG>**1 2 3**</AGG-AVG> => **2** (returns the average between the values inside of the tag) 
-    * <AGG-FST>**1 2 3**</AGG-FST> => **1** (returns the first element of the double number sequence inside of the tag)
-    * <AGG-LST>**1 2 3**</AGG-LST> => **3** (returns the last element of the double number sequence inside of the tag)
+    * \<AGG-SUM>**1 2 3**\</AGG-SUM> => **6** (returns sum of all values inside of the tag) 
+    * \<AGG-PRO>**1 2 3**\</AGG-PRO> => **6** (returns the product of all values inside of the tag)
+    * \<AGG-AVG>**1 2 3**\</AGG-AVG> => **2** (returns the average between the values inside of the tag) 
+    * \<AGG-FST>**1 2 3**\</AGG-FST> => **1** (returns the first element of the double number sequence inside of the tag)
+    * \<AGG-LST>**1 2 3**\</AGG-LST> => **3** (returns the last element of the double number sequence inside of the tag)
 
 3. SRT TAG Category
-    * <SRT-REV>**1 2 3**</SRT-REV> => **3 2 1** (reverses the values inside of the tag)
+    * \<SRT-REV>**1 2 3**\</SRT-REV> => **3 2 1** (reverses the values inside of the tag)
     * <SRT-ORD "**ASC**">**3 2 1**</SRT-ORD> => **1 2 3** (sorts values in ascending order("ASC" param) or in descending order ("DSC" param)
     * <SRT-SLC "**1**">**3 2 1**</SRT-SLC> => **2 1** (returns sublist of values from the given index (param))
-    * <SRT-DST>**4 8 4 3**</SRT-DST> => **4 8 3** (removes duplicates)
+    * \<SRT-DST>**4 8 4 3**\</SRT-DST> => **4 8 3** (removes duplicates)
     
 ### Usage
 When you run the program you should type two valid txt file names. The first one is the name of the input file and the second one is the output file name. If there are not any errors in the input file you can see the result in the output file. Otherwise, an error message should appear in the console telling you what is the exact error.
