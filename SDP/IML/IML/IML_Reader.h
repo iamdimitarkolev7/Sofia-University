@@ -17,13 +17,13 @@ private:
 	void inspect(const std::string& data);
 
 	static std::vector<std::string> split(std::string str, const std::string& delimiter);
-	static std::list<int> mapToInteger(const std::string& values);
+	static std::list<double> mapToDouble(const std::string& values);
 	
 public:
 	IML_Reader(std::string inputFileName, std::string outputFileName);
 	
 	void read(std::ifstream&);
-	void write(std::ofstream&, std::list<int> data);
+	void write(std::ofstream&, std::list<double> data);
 };
 
 #endif

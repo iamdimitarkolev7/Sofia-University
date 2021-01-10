@@ -13,15 +13,15 @@ Tag::Tag(std::string &name, std::vector<std::string> values, std::string additio
 	tagValues= mapToList(values);
 }
 
-std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
+std::list<double> Tag::mapToList(const std::vector<std::string> &values) const
 {
-	std::list<int> result;
+	std::list<double> result;
 
 	for (size_t i = 0; i < values.size(); i++)
 	{
 		try
 		{
-			result.push_back(std::stoi(values[i]));
+			result.push_back(std::stod(values[i]));
 		}
 		catch(const std::exception &err)
 		{
@@ -32,14 +32,14 @@ std::list<int> Tag::mapToList(const std::vector<std::string> &values) const
 	return result;
 }
 
-std::list<int> Tag::executeTag()
+std::list<double> Tag::executeTag()
 {
 	Functions f;
 	
 	if (tagName == "MAP-INC")
-		f.increase(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+		f.increase(tagValues, std::stod(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "MAP-MLT")
-		f.multiply(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+		f.multiply(tagValues, std::stod(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "AGG-SUM")
 		f.agg_sum(tagValues);
 	else if (tagName == "AGG-PRO")
@@ -57,16 +57,16 @@ std::list<int> Tag::executeTag()
 	else if (tagName == "SRT-ORD" && tagParam == "\"DSC\"")
 		f.sort_dsc(tagValues);
 	else if (tagName == "SRT-SLC")
-		f.slice(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
+		f.slice(tagValues, std::stod(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "SRT-DST")
 		f.remove_duplicates(tagValues);
 
 	return tagValues;
 }
 
-void Tag::addValues(std::list<int> values)
+void Tag::addValues(std::list<double> values)
 {
-	std::list<int>::iterator it;
+	std::list<double>::iterator it;
 
 	for (it = values.begin(); it != values.end(); ++it)
 	{
@@ -79,7 +79,7 @@ std::string Tag::getTagName() const
 	return tagName;
 }
 
-std::list<int> Tag::getValues() const
+std::list<double> Tag::getValues() const
 {
 	return tagValues;
 }
@@ -103,11 +103,11 @@ bool Tag::validParam(std::string param) const
 	{
 		try
 		{
-			int value = std::stoi(param.substr(1, param.size() - 2));
+			double value = std::stod(param.substr(1, param.size() - 2));
 		}
 		catch (const std::exception& err)
 		{
-			std::cout << "The param of " << tagName << " must be a valid integer!" << std::endl;
+			std::cout << "The param of " << tagName << " must be a valid double number!" << std::endl;
 			return false;
 		}
 	}

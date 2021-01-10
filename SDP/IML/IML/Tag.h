@@ -10,10 +10,10 @@
 class Tag
 {
 	std::string tagName;
-	std::list<int> tagValues;
+	std::list<double> tagValues;
 	std::string tagParam;
 	
-	std::list<int> mapToList(const std::vector<std::string>& values) const;
+	std::list<double> mapToList(const std::vector<std::string>& values) const;
 	bool validName(std::string name) const;
 	bool validParam(std::string param) const;
 	
@@ -21,10 +21,10 @@ public:
 	Tag(std::string& name);
 	Tag(std::string& name, std::vector<std::string> values = {}, std::string additionalParam = "");
 
-	std::list<int> executeTag();
-	void addValues(std::list<int> values);
+	std::list<double> executeTag();
+	void addValues(std::list<double> values);
 	std::string getTagName() const;
-	std::list<int> getValues() const;
+	std::list<double> getValues() const;
 };
 
 #endif

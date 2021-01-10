@@ -27,14 +27,14 @@ std::vector<std::string> IML_Reader::split(std::string str, const std::string& d
 	return tokens;
 }
 
-std::list<int> IML_Reader::mapToInteger(const std::string& values)
+std::list<double> IML_Reader::mapToDouble(const std::string& values)
 {
-	std::list<int> result;
+	std::list<double> result;
 	std::vector<std::string> vals = split(values, " ");
 
 	for (size_t i = 0; i < vals.size(); i++)
 	{
-		result.push_back(std::stoi(vals[i]));
+		result.push_back(std::stod(vals[i]));
 	}
 
 	return result;
@@ -83,7 +83,7 @@ void IML_Reader::execTag(const std::string& tag, const std::string& values)
 {
 	if (tag == objectModelTree.top().getTagName())
 	{
-		std::list<int> result = objectModelTree.top().executeTag();
+		std::list<double> result = objectModelTree.top().executeTag();
 		
 		objectModelTree.pop();
 
@@ -93,7 +93,7 @@ void IML_Reader::execTag(const std::string& tag, const std::string& values)
 			
 			if (values != "")
 			{
-				const std::list<int> additionalValue = mapToInteger(values);
+				const std::list<double> additionalValue = mapToDouble(values);
 				objectModelTree.top().addValues(additionalValue);
 			}
 		}
@@ -170,11 +170,11 @@ void IML_Reader::read(std::ifstream& in)
 	in.close();
 }
 
-void IML_Reader::write(std::ofstream& out, std::list<int> data)
+void IML_Reader::write(std::ofstream& out, std::list<double> data)
 {	
 	out.open(outputFileName);
 
-	std::list<int>::iterator it;
+	std::list<double>::iterator it;
 
 	for (it = data.begin(); it != data.end(); ++it)
 	{
