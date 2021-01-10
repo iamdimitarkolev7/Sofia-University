@@ -1,2 +1,3 @@
 ﻿  Task2.cpp
+C:\Users\User1\Documents\Sofia-University\SDP\Exercises\Task2\Task2.cpp(105): warning C4715: 'sumTrees<int>': not all control paths return a value
   Task2.vcxproj -> C:\Users\User1\Documents\Sofia-University\SDP\Exercises\Debug\Task2.exe
