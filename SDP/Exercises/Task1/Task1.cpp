@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 struct Node
 {
@@ -27,9 +28,42 @@ int sum(Node* node, int crrLevel = 0)
 
 }
 
+void printLevel(Node* node, int level)
+{
+	if (node == nullptr)
+	{
+		return;
+	}
+	
+	if (level == 0)
+	{
+		std::cout << node->data << " ";
+	}
+	else
+	{
+		printLevel(node->left, level - 1);
+		printLevel(node->right, level - 1);
+	}
+}
+
+void clear(Node*& node)
+{
+	if (node == nullptr)
+	{
+		return;
+	}
+
+	clear(node->left);
+	clear(node->right);
+
+	delete node;
+	node = nullptr;
+}
+
 int main()
 {
-	Node* root = new Node{ 1,
+	Node* root =
+	new Node{ 1,
 		new Node{2,
 			new Node{4,
 				new Node{5, nullptr, nullptr},
@@ -41,7 +75,9 @@ int main()
 				nullptr},
 		nullptr} };
 
-	std::cout << sum(root, 0) << std::endl;
+	printLevel(root, 3);
+
+	clear(root);
 
 	return 0;
 }

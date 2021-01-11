@@ -92,7 +92,7 @@ Node<T>* sumTrees(const Node<T>* node1, const Node<T>* node2)
 	}
 	if (node1 != nullptr && node2 == nullptr)
 	{
-		return new Node<T>{ node1->data, sumTrees(node1->left, node2), sumTrees(node1->left, node2)  };
+		return new Node<T>{ node1->data, sumTrees(node1->left, node2), sumTrees(node1->right, node2)  };
 	}
 	if (node1 == nullptr && node2 != nullptr)
 	{
