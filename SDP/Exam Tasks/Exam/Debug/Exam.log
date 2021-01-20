@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\Users\User1\Desktop\Exam\Exam\Source.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Exam\Exam\Source.cpp(247,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Exam\Exam\Source.cpp(346,20): warning C4018: '<': signed/unsigned mismatch
+  Exam.vcxproj -> C:\Users\User1\Desktop\Exam\Debug\Exam.exe
