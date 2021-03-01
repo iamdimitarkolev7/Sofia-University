@@ -50,7 +50,7 @@ void Functions::agg_first(std::list<double>& lst)
 
 void Functions::agg_last(std::list<double>& lst)
 {
-	const int result = lst.back();
+	const double result = lst.back();
 	lst.clear();
 	lst.push_back(result);
 }

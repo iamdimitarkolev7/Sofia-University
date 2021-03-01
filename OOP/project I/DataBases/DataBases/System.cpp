@@ -125,7 +125,7 @@ void System::showTables()
 	
 	for (int i = 0; i < dataBase.size(); i++)
 	{
-		if (dataBase[i].getName() == "")
+		if (dataBase[i].getName() == "" || dataBase[i].getName() == " ")
 		{
 			continue;
 		}
@@ -167,17 +167,17 @@ void System::printTable(std::string tableName)
 
 void System::exportTable(std::string tableName, std::string destFileName)
 {
+	if (!isNameValid(tableName))
+	{
+		std::cout << "No such loaded table!" << std::endl;
+		return;
+	}
+	
 	std::fstream out(destFileName, std::ios::out | std::ios::trunc);
 
 	if (!out.is_open())
 	{
 		std::cout << "Cannot open/create this file!" << std::endl;
-		return;
-	}
-
-	if (!isNameValid(tableName))
-	{
-		std::cout << "No such loaded table!" << std::endl;
 		return;
 	}
 
@@ -220,7 +220,7 @@ void System::addColumn(std::string tableName, int pos, std::string type)
 	{
 		if (dataBase[i].getName() == tableName)
 		{
-			if (pos < 0 || pos > dataBase[i].getCols() + 1)
+			if (pos < 0 || pos > dataBase[i].getCols())
 			{
 				std::cout << "Invalid column position!" << std::endl;
 				return;
@@ -324,7 +324,7 @@ void System::update(std::string tableName, int searchColumn, std::string searchV
 
 			for (int p = 0; p < dataBase[i].getRows(); p++)
 			{
-				for (int k = 0; k < dataBase[i].getCols(); k++)
+				/*for (int k = 0; k < dataBase[i].getCols(); k++)
 				{
 					if (k == (searchColumn - 1))
 					{
@@ -356,6 +356,22 @@ void System::update(std::string tableName, int searchColumn, std::string searchV
 							}
 						}
 					}
+				}*/
+				if (searchValue == dataBase[i].getTable()[p][searchColumn - 1].getData())
+				{
+					Cell cell(targetValue);
+
+					if (dataBase[i].getTable()[p][targetColumn - 1].getType() != cell.getType())
+					{
+						if (dataBase[i].getTable()[p][targetColumn - 1].getType() != "null")
+						{
+							std::cout << "You cannot change cell\'s data from one type to another!"
+								<< std::endl;
+							return;
+						}
+					}
+					dataBase[i].updateCell(p, targetColumn - 1, targetValue);
+					doneWork = true;
 				}
 			}
 		}
@@ -576,17 +592,17 @@ void System::aggregate(std::string tableName, int searchColumn, std::string sear
 						{
 							if (dataBase[i].getTable()[p][k].getType() == "string")
 							{
-								std::cout << "Sum operation is only supported with integer and double types!" << std::endl;
+								std::cout << "Product operation is only supported with integer and double types!" << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "integer")
 							{
-								std::cout << "Sum: " << dataBase[i].productColumn(targetColumn - 1) << std::endl;
+								std::cout << "Product: " << dataBase[i].productColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "double")
 							{
-								std::cout << "Sum: " << dataBase[i].productColumn(targetColumn - 1) << std::endl;
+								std::cout << "Product: " << dataBase[i].productColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 						}
@@ -594,17 +610,17 @@ void System::aggregate(std::string tableName, int searchColumn, std::string sear
 						{
 							if (dataBase[i].getTable()[p][k].getType() == "string")
 							{
-								std::cout << "Sum operation is only supported with integer and double types!" << std::endl;
+								std::cout << "Maximum operation is only supported with integer and double types!" << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "integer")
 							{
-								std::cout << "Sum: " << dataBase[i].maxElementColumn(targetColumn - 1) << std::endl;
+								std::cout << "Max: " << dataBase[i].maxElementColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "double")
 							{
-								std::cout << "Sum: " << dataBase[i].maxElementColumn(targetColumn - 1) << std::endl;
+								std::cout << "Max: " << dataBase[i].maxElementColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 						}
@@ -612,17 +628,17 @@ void System::aggregate(std::string tableName, int searchColumn, std::string sear
 						{
 							if (dataBase[i].getTable()[p][k].getType() == "string")
 							{
-								std::cout << "Sum operation is only supported with integer and double types!" << std::endl;
+								std::cout << "Minimum operation is only supported with integer and double types!" << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "integer")
 							{
-								std::cout << "Sum: " << dataBase[i].minElementColumn(targetColumn - 1) << std::endl;
+								std::cout << "Min: " << dataBase[i].minElementColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 							else if (dataBase[i].getTable()[p][k].getType() == "double")
 							{
-								std::cout << "Sum: " << dataBase[i].minElementColumn(targetColumn - 1) << std::endl;
+								std::cout << "Min: " << dataBase[i].minElementColumn(targetColumn - 1) << std::endl;
 								return;
 							}
 						}

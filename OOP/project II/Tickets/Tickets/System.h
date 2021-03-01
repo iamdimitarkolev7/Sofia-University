@@ -15,7 +15,6 @@ public:
 	System(const System&) = delete;
 	void operator=(const System&) = delete;
 
-	
 	void freeSeatsData(std::string date, std::string name);
 	void bookTicket(int row, int seat, std::string date, std::string eventName, std::string note);
 	void unbookTicket(int row, int seat, std::string date, std::string eventName);

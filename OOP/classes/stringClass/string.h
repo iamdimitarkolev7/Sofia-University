@@ -46,10 +46,10 @@ public:
     void removeLast();
     String slice(int start, int end) const;
     void replace(const char *oldWord,const char *newWord);
-    //toUpperCase();
-    //toLowerCase();
-    //trim();
-    //split();
+    void toUpperCase();
+    void toLowerCase();
+    void trim();
+    //String* split(const char* delimiter); TODO... 
 };
 
 #endif

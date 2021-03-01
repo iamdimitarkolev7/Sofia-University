@@ -8,8 +8,8 @@
 
 String::String()
 {
-    str = nullptr;
-    length = 0;
+    setLength(0);
+    setStr(nullptr);
 };
 
 String::String(const char *_str)
@@ -202,7 +202,7 @@ void String::output()
     }
 
     std::cout << std::endl;
-} 
+}
 
 void String::add(const char *_str)
 {
@@ -347,5 +347,113 @@ void String::replace(const char *oldWord, const char *newWord)
         }
     }
 }
+
+void String::toUpperCase()
+{
+    for (int i = 0; i < length; i++)
+    {
+        if (str[i] >= 'a' && str[i] <= 'z')
+        {
+            str[i] -= 32;
+        }
+    }
+}
+
+void String::toLowerCase()
+{
+    for (int i = 0; i < length; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            str[i] += 32;
+        }
+    }
+}
+
+void String::trim()
+{
+    char *result;
+    int counterL = 0, counterR = 0;
+
+    if (str[0] = ' ')
+    {
+        int index = 1;
+        counterL++;
+
+        while (str[index] == ' ')
+        {
+            counterL++;
+            index++;
+        }
+    }
+
+    if (str[length - 1] = ' ')
+    {
+        int index = length - 2;
+        counterR++;
+
+        while (str[index] == ' ')
+        {
+            counterR++;
+            index--;
+        }
+    }
+
+    result = new char[length - counterL - counterR];
+    int index = 0;
+
+    for (int i = counterL; i < length - counterR; i++)
+    {
+        result[index] = str[i];
+        index++;
+    }
+
+    delete[] str;
+
+    str = result;
+    length = length - counterL - counterR;
+}
+
+/* String *String::split(const char *delimiter)
+{
+    int delLength = strlen(delimiter);
+    String *resultArray;
+    int startIndex = 0, helpingIndex = 0, counter = 0;
+    char *resultStr;
+
+    for (int i = 0; *(this->str + i); i++)
+    {
+        if (isMatching(this->str + i, delimiter))
+        {
+            counter++;
+        }
+    }
+
+    resultArray = new String[counter + 1];
+    int resArrIndex = 0;
+
+    for (int i = 0; *(this->str + i); i++)
+    {
+        if (isMatching(this->str + i, delimiter))
+        {
+            resultArray[resArrIndex].str = new char[i - startIndex];
+            for (int index = startIndex; index < i; index++)
+            {
+                resultArray[resArrIndex].str[index] = str[helpingIndex];
+                helpingIndex++;
+            }
+
+            resultArray[resArrIndex].length = strlen(resultStr);
+
+            std::cout << resultArray[resArrIndex].getStr() << std::endl;
+            resArrIndex++;
+
+            startIndex = i + delLength;
+            helpingIndex += delLength;
+        }
+    }
+
+    return resultArray;
+} */ 
 
 #endif

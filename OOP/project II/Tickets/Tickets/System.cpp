@@ -12,7 +12,7 @@ System& System::i()
 
 System::System()
 {
-	int number = 1, rows = 10, places = 20;
+	int number = 1, rows = 3, places = 3;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -580,11 +580,10 @@ void System::showMostViewedEvents()
 void System::showLeastViewedEvents()
 {
 	int counter = 0;
-	bool showEvent;
 
 	for (int i = 0; i < events.size(); i++)
 	{
-		showEvent = false;
+		bool showEvent = false;
 
 		for (int j = 0; j < eventHalls.size(); j++)
 		{

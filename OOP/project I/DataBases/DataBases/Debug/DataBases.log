@@ -1,28 +1,28 @@
 ﻿  System.cpp
 C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(124,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(143,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(158,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(181,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(189,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(193,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(216,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(254,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(271,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(311,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(381,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(429,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(473,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(481,18): warning C4018: '>': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(491,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(517,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(746,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(776,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(824,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(860,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(939,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(956,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1044,29): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1047,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1142,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(126,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(146,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(161,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(184,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(192,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(196,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(219,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(257,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(274,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(314,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(400,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(448,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(492,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(500,18): warning C4018: '>': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(510,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(536,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(765,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(795,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(843,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(879,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(958,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(975,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1063,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1066,48): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\DataBases\System.cpp(1161,22): warning C4018: '<': signed/unsigned mismatch
   DataBases.vcxproj -> C:\Users\User1\Desktop\Sofia-University\OOP\project I\DataBases\Debug\DataBases.exe

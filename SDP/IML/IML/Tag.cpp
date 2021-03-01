@@ -57,7 +57,7 @@ std::list<double> Tag::executeTag()
 	else if (tagName == "SRT-ORD" && tagParam == "\"DSC\"")
 		f.sort_dsc(tagValues);
 	else if (tagName == "SRT-SLC")
-		f.slice(tagValues, std::stod(tagParam.substr(1, tagParam.size() - 2)));
+		f.slice(tagValues, std::stoi(tagParam.substr(1, tagParam.size() - 2)));
 	else if (tagName == "SRT-DST")
 		f.remove_duplicates(tagValues);
 
